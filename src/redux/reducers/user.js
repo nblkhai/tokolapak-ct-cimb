@@ -1,13 +1,6 @@
-<<<<<<< HEAD
 import userTypes from "./types/user";
 
 const { ON_LOGIN_SUCCESS, ON_LOGIN_FAIL, ON_LOGOUT_SUCCESS } = userTypes;
-=======
-import userTypes from "../types/user";
-
-const { ON_LOGIN_FAIL, ON_LOGIN_SUCCESS, ON_LOGOUT_SUCCESS } = userTypes;
-
->>>>>>> b3d57fa4d4c7075e9d991868afaa7eaced7bd92e
 const init_state = {
   id: 0,
   username: "",
