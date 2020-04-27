@@ -146,6 +146,7 @@ class Home extends React.Component {
         <div className="container">
           {/* BEST SELLER SECTION */}
           <h2 className="text-center font-weight-bolder mt-5">BEST SELLER</h2>
+          {/* Row dan flex-wrap yang membuat tampilan best seller rapih  */}
           <div className="row d-flex flex-wrap justify-content-center">
             <ProductCard className="m-2" />
             <ProductCard className="m-2" />
