@@ -8,7 +8,8 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import Home from "./views/screens/Home/Home";
 import Navbar from "./views/components/Navbar/Navbar";
-import AuthScreen from "./views/screens/Auth/AuthScreen";
+import AuthScreen from "./views/screens/auth/AuthScreen";
+
 import { userKeepLogin } from "./redux/actions";
 
 const cookieObj = new Cookie();

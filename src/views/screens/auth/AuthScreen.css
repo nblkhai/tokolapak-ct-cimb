@@ -5,6 +5,8 @@
 }
 
 .auth-screen-btn.active {
-  background-color: black;
+  background-color: black !important;
   border: 1px solid black !important;
+  color: white !important;
+  transition: all 150ms ease-in-out;
 }

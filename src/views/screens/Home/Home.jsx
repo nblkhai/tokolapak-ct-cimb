@@ -1,4 +1,5 @@
 import React from "react";
+import Axios from "axios";
 import { Link } from "react-router-dom";
 import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,13 +11,13 @@ import {
 import "./Home.css";
 
 import ProductCard from "../../components/Cards/ProductCard.tsx";
-
 import iPhoneX from "../../../assets/images/Showcase/iPhone-X.png";
 import iPhone8 from "../../../assets/images/Showcase/iPhone-8.png";
 import iPadPro from "../../../assets/images/Showcase/iPad-Pro.png";
 import ButtonUI from "../../components/Button/Button";
 import CarouselShowcaseItem from "./CarouselShowcaseItem.tsx";
 import Colors from "../../../constants/Colors";
+import { API_URL } from "../../../constants/API";
 
 const dummy = [
   {
@@ -49,6 +50,7 @@ class Home extends React.Component {
   state = {
     activeIndex: 0,
     animating: false,
+    bestSellerData: [],
   };
 
   renderCarouselItems = () => {
@@ -108,11 +110,31 @@ class Home extends React.Component {
     this.setState({ activeIndex: prevIndex });
   };
 
+  getBestSellerProduct = () => {
+    Axios.get(`${API_URL}/products`)
+      .then((res) => {
+        this.setState({ bestSellerData: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  renderProducts = () => {
+    return this.state.bestSellerData.map((val) => {
+      return <ProductCard className="m-2" data={val} />;
+    });
+  };
+
+  componentDidMount() {
+    this.getBestSellerProduct();
+  }
+
   render() {
     return (
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
-          <Link to="/" style={{ color: "inherit" }}>
+          <Link to="/auth" style={{ color: "inherit" }}>
             <h6 className="mx-4 font-weight-bold">PHONE</h6>
           </Link>
           <Link to="/" style={{ color: "inherit" }}>
@@ -146,13 +168,8 @@ class Home extends React.Component {
         <div className="container">
           {/* BEST SELLER SECTION */}
           <h2 className="text-center font-weight-bolder mt-5">BEST SELLER</h2>
-          {/* Row dan flex-wrap yang membuat tampilan best seller rapih  */}
           <div className="row d-flex flex-wrap justify-content-center">
-            <ProductCard className="m-2" />
-            <ProductCard className="m-2" />
-            <ProductCard className="m-2" />
-            <ProductCard className="m-2" />
-            <ProductCard className="m-2" />
+            {this.renderProducts()}
           </div>
         </div>
         {/* ABOUT SECTION */}
