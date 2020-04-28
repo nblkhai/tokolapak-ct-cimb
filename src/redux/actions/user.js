@@ -1,10 +1,15 @@
 import { API_URL } from "../../constants/API";
 import Axios from "axios";
-import userTypes from "./types/user";
-import user from "../reducers/types/user";
+import userTypes from "../types/user";
+import Cookie from "universal-cookie";
 
-const { ON_LOGIN_SUCCESS, ON_LOGIN_FAIL, ON_LOGOUT_SUCCESS } = userTypes;
-
+const cookieObj = new Cookie();
+const {
+  ON_LOGIN_SUCCESS,
+  ON_LOGIN_FAIL,
+  ON_LOGOUT_SUCCESS,
+  ON_REGISTER_FAIL,
+} = userTypes;
 export const loginHandler = (userData) => {
   return (dispatch) => {
     const { username, password } = userData;
@@ -21,6 +26,7 @@ export const loginHandler = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
+          alert("Login Berhasil!");
         } else {
           dispatch({
             type: ON_LOGIN_FAIL,
@@ -44,12 +50,12 @@ export const userKeepLogin = (userData) => {
       .then((res) => {
         if (res.data.length > 0) {
           dispatch({
-            type: "ON_LOGIN_SUCCESS",
+            type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
         } else {
           dispatch({
-            type: "ON_LOGIN_FAIL",
+            type: ON_LOGIN_FAIL,
             payload: "Username / Password Salah!",
           });
         }
@@ -60,10 +66,10 @@ export const userKeepLogin = (userData) => {
   };
 };
 
-export const logoutHandler = (userData) => {
+export const logoutHandler = () => {
+  cookieObj.remove("authData");
   return {
-    type: "ON_CHANGE_LOGOUT",
-    payload: userData,
+    type: ON_LOGOUT_SUCCESS,
   };
 };
 
@@ -77,7 +83,7 @@ export const registerHandler = (userData) => {
       .then((res) => {
         if (res.data.length > 0) {
           dispatch({
-            type: "ON_REGISTER_FAIL",
+            type: ON_REGISTER_FAIL,
             payload: "username sudah digunakan",
           });
         } else {
@@ -88,6 +94,7 @@ export const registerHandler = (userData) => {
                 type: ON_LOGIN_SUCCESS,
                 payload: res.data,
               });
+              alert("Terima Kasih sudah Register!");
             })
             .catch((err) => {
               console.log(err);

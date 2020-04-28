@@ -1,14 +1,25 @@
 {
-<<<<<<< HEAD
-  "users": []
-}
-=======
   "users": [
     {
-      "username": "seto",
-      "password": "password",
+      "username": "bella",
+      "password": "bella",
+      "address": "bella",
+      "fullName": "bella",
       "id": 1
+    },
+    {
+      "username": "admin",
+      "password": "123",
+      "address": "jakarta",
+      "fullName": "admin sayang",
+      "id": 2
+    },
+    {
+      "username": "aldy",
+      "password": "123",
+      "address": "jaktim",
+      "fullName": "aldy aulia andrat",
+      "id": 3
     }
   ]
 }
->>>>>>> b3d57fa4d4c7075e9d991868afaa7eaced7bd92e
