@@ -19,6 +19,17 @@
       "password": "123",
       "address": "jaktim",
       "fullName": "aldy aulia andrat",
+      "username": "doraemon",
+      "fullName": "Dora Emon",
+      "password": "password",
+      "email": "doraemon@mail.com",
+      "id": 2
+    },
+    {
+      "username": "pikachu",
+      "fullName": "Dora Emon",
+      "password": "password",
+      "email": "doraemon@mail.com",
       "id": 3
     }
   ]

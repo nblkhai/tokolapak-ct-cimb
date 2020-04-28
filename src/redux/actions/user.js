@@ -83,8 +83,8 @@ export const registerHandler = (userData) => {
       .then((res) => {
         if (res.data.length > 0) {
           dispatch({
-            type: ON_REGISTER_FAIL,
-            payload: "username sudah digunakan",
+            type: "ON_REGISTER_FAIL",
+            payload: "Username sudah digunakan",
           });
         } else {
           Axios.post(`${API_URL}/users`, userData)
