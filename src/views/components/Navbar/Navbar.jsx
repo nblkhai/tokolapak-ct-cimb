@@ -8,11 +8,13 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import ButtonUI from "../Button/Button.tsx";
 import { connect } from "react-redux";
+import Cookie from "universal-cookie";
+import { logoutHandler } from "../../../redux/actions/user";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
 };
-
+const cookiesObject = new Cookie();
 class Navbar extends React.Component {
   state = {
     searchBarIsFocused: false,
@@ -25,6 +27,11 @@ class Navbar extends React.Component {
 
   onBlur = () => {
     this.setState({ searchBarIsFocused: false });
+  };
+
+  logoutDataHandler = () => {
+    this.props.onLogout();
+    cookiesObject.remove("authData");
   };
 
   render() {
@@ -61,6 +68,19 @@ class Navbar extends React.Component {
                   4
                 </small>
               </CircleBg>
+              <ButtonUI
+                className="ml-3"
+                type="contained"
+                value="Logout"
+                onClick={this.logoutDataHandler}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to="/auth"
+                >
+                  Logout
+                </Link>
+              </ButtonUI>
             </>
           ) : (
             <>
@@ -72,7 +92,7 @@ class Navbar extends React.Component {
                   Sign in
                 </Link>
               </ButtonUI>
-              <ButtonUI type="contained">
+              <ButtonUI type="contained ">
                 <Link
                   style={{ textDecoration: "none", color: "inherit" }}
                   to="/auth"
@@ -87,10 +107,13 @@ class Navbar extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+
+const mapStatetoProps = (state) => {
   return {
     user: state.user,
   };
 };
-
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = {
+  onLogout: logoutHandler,
+};
+export default connect(mapStatetoProps, mapDispatchToProps)(Navbar);
