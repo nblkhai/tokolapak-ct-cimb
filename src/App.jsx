@@ -12,6 +12,7 @@ import AuthScreen from "./views/screens/auth/AuthScreen";
 
 import { userKeepLogin } from "./redux/actions";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
+import Cart from "./views/screens/Cart/Cart";
 
 const cookieObj = new Cookie();
 
@@ -24,17 +25,22 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/auth" component={AuthScreen} />
-          <Route exact path="/product" component={ProductDetails} />
-        </Switch>
-        <div style={{ height: "120px" }} />
-      </>
-    );
+    if (this.props.user.cookieChecked) {
+      return (
+        <>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/auth" component={AuthScreen} />
+            <Route exact path="/product/:id" component={ProductDetails} />
+            <Route exact path="/cart" component={Cart} />
+          </Switch>
+          <div style={{ height: "120px" }} />
+        </>
+      );
+    } else {
+      return <div>Loading...</div>;
+    }
   }
 }
 
