@@ -13,6 +13,7 @@ import AuthScreen from "./views/screens/auth/AuthScreen";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
+import AdminDashboard from "./views/screens/Admin/AdminDashboard";
 
 const cookieObj = new Cookie();
 
@@ -25,9 +26,13 @@ class App extends React.Component {
       } else {
         this.props.cookieChecker();
       }
-    }, 2000);
+    }, 1500);
   }
-
+  renderAdminRoutes = () => {
+    if (this.props.user.role === "admin") {
+      return <Route exact path="/admin/dashboard" component={AdminDashboard} />;
+    }
+  };
   render() {
     if (this.props.user.cookieChecked) {
       return (
@@ -42,6 +47,7 @@ class App extends React.Component {
               component={ProductDetails}
             />
             <Route exact path="/cart" component={Cart} />
+            {this.renderAdminRoutes()}
           </Switch>
           <div style={{ height: "120px" }} />
         </>

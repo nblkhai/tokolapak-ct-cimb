@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
-import { Table } from "reactstrap";
+import { Table, Alert } from "reactstrap";
 import ButtonUI from "../../components/Button/Button";
 import swal from "sweetalert";
 
@@ -11,7 +11,7 @@ class Cart extends React.Component {
   state = {
     arrCart: [],
   };
-  addCart() {
+  getCartData() {
     Axios.get(`${API_URL}/cart`, {
       params: {
         userId: this.props.user.id,
@@ -27,43 +27,53 @@ class Cart extends React.Component {
       });
   }
   componentDidMount() {
-    this.addCart();
+    this.getCartData();
   }
 
-  deleteCart(id) {
+  deleteCart = (id) => {
     Axios.delete(`${API_URL}/carts/${id}`)
       .then((res) => {
         console.log(res);
+        this.getCartData();
         swal(
           "Delete to cart",
           "Your item has been deleted from your cart",
           "success"
         );
-        this.addCart();
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
   renderCart = () => {
     return this.state.arrCart.map((val, idx) => {
+      const { quantity, product, id } = val;
+      const { productName, image, price } = product;
       return (
         <tr>
           <td>{idx + 1}</td>
-          <td>{val.product.productName}</td>
+          <td>{productName}</td>
           <td>
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
-            }).format(val.product.price)}
+            }).format(price)}
           </td>
-          <td>{val.quantity}</td>
+          <td>{quantity}</td>
+          <td>
+            {""}
+            <img
+              src={image}
+              alt=""
+              style={{ width: "100px", height: "200px", objectFit: "contain" }}
+            ></img>
+          </td>
           <td>
             <input
               type="button"
               className="btn btn-danger"
               value="Delete"
-              onClick={() => this.deleteCart(val.id)}
+              onClick={() => this.deleteCart(id)}
             />
           </td>
         </tr>
@@ -77,8 +87,9 @@ class Cart extends React.Component {
           <tr>
             <th>No</th>
             <th>Product Name</th>
-            <th>Qty</th>
             <th>Price</th>
+            <th>Qty</th>
+            <th>Image</th>
             <th>Action</th>
           </tr>
         </thead>

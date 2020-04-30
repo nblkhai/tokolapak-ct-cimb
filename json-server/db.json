@@ -5,6 +5,7 @@
       "password": "bella",
       "address": "bella",
       "fullName": "bella",
+      "role": "admin",
       "id": 1
     },
     {
@@ -12,6 +13,7 @@
       "password": "123",
       "address": "jakarta",
       "fullName": "admin sayang",
+      "role": "user",
       "id": 2
     },
     {
@@ -19,6 +21,7 @@
       "fullName": "Dora Emon",
       "password": "password",
       "email": "doraemon@mail.com",
+      "role": "user",
       "id": 2
     },
     {
@@ -33,12 +36,13 @@
       "fullName": "elmoo",
       "password": "aaa",
       "email": "elmo@mail.com",
+      "role": "admin",
       "id": 4
     }
   ],
   "products": [
     {
-      "productName": "iPhone 7 Plus",
+      "productName": "iPhone 7 +",
       "price": 5000000,
       "category": "Phone",
       "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
@@ -60,6 +64,54 @@
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
       "desc": "HP Terbaikk loh",
       "id": 3
+    },
+    {
+      "productName": "iPhone 11 Pro Max",
+      "price": "23000000",
+      "category": "",
+      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
+      "desc": "HP Jual Ginjal",
+      "id": 4
+    },
+    {
+      "productName": "iPhone 11 Pro Max",
+      "price": "23000000",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
+      "desc": "HP Jual Ginjal",
+      "id": 5
+    },
+    {
+      "productName": "iPhone 11 Pro Max",
+      "price": "23000000",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
+      "desc": "HP Jual Ginjal",
+      "id": 6
+    },
+    {
+      "productName": "",
+      "price": 0,
+      "category": "Phone",
+      "image": "",
+      "desc": "",
+      "id": 7
+    },
+    {
+      "productName": "",
+      "price": 0,
+      "category": "Phone",
+      "image": "",
+      "desc": "",
+      "id": 8
+    },
+    {
+      "productName": "",
+      "price": 0,
+      "category": "Phone",
+      "image": "",
+      "desc": "",
+      "id": 9
     }
   ],
   "cart": [
@@ -110,6 +162,30 @@
       "productId": 2,
       "quantity": 1,
       "id": 8
+    },
+    {
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 9
+    },
+    {
+      "userId": 2,
+      "productId": 1,
+      "quantity": 1,
+      "id": 10
+    },
+    {
+      "userId": 2,
+      "productId": 2,
+      "quantity": 1,
+      "id": 11
+    },
+    {
+      "userId": 2,
+      "productId": 2,
+      "quantity": 1,
+      "id": 12
     }
   ]
 }
