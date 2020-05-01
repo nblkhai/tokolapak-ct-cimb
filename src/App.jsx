@@ -9,11 +9,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import Home from "./views/screens/Home/Home";
 import Navbar from "./views/components/Navbar/Navbar";
 import AuthScreen from "./views/screens/auth/AuthScreen";
-
-import { userKeepLogin, cookieChecker } from "./redux/actions";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
+
+import { userKeepLogin, cookieChecker } from "./redux/actions";
 
 const cookieObj = new Cookie();
 
