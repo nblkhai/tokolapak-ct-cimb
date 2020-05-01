@@ -54,7 +54,7 @@
       "price": 15000000,
       "category": "Tablet",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
-      "desc": "HP Terbaikk loh",
+      "desc": "iPad Terbaikk loh",
       "id": 2
     },
     {
@@ -62,7 +62,7 @@
       "price": 20000000,
       "category": "Laptop",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
-      "desc": "HP Terbaikk loh",
+      "desc": "Laptop Terbaikk loh",
       "id": 3
     },
     {
@@ -72,46 +72,6 @@
       "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
       "desc": "HP Jual Ginjal",
       "id": 4
-    },
-    {
-      "productName": "iPhone 11 Pro Max",
-      "price": "23000000",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
-      "desc": "HP Jual Ginjal",
-      "id": 5
-    },
-    {
-      "productName": "iPhone 11 Pro Max",
-      "price": "23000000",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
-      "desc": "HP Jual Ginjal",
-      "id": 6
-    },
-    {
-      "productName": "",
-      "price": 0,
-      "category": "Phone",
-      "image": "",
-      "desc": "",
-      "id": 7
-    },
-    {
-      "productName": "",
-      "price": 0,
-      "category": "Phone",
-      "image": "",
-      "desc": "",
-      "id": 8
-    },
-    {
-      "productName": "",
-      "price": 0,
-      "category": "Phone",
-      "image": "",
-      "desc": "",
-      "id": 9
     }
   ],
   "cart": [

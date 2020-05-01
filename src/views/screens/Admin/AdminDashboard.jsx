@@ -11,7 +11,7 @@ class AdminDashboard extends React.Component {
     productList: [],
     createForm: {
       productName: "",
-      price: 0,
+      price: "",
       category: "Phone",
       image: "",
       desc: "",
@@ -60,7 +60,12 @@ class AdminDashboard extends React.Component {
             </ButtonUI>
           </td>
           <td>
-            <ButtonUI type="outlined">Delete</ButtonUI>
+            <ButtonUI
+              type="outlined"
+              onClick={() => this.deleteProductHandler(val.id)}
+            >
+              Delete
+            </ButtonUI>
           </td>
         </tr>
       );
@@ -81,16 +86,17 @@ class AdminDashboard extends React.Component {
     Axios.post(`${API_URL}/products`, this.state.createForm)
       .then((res) => {
         swal("Success", "Your items has been added to the list", "success");
-        this.getProductList();
+
         this.setState({
           createForm: {
             productName: "",
-            price: 0,
+            price: "",
             category: "Phone",
             image: "",
             desc: "",
           },
         });
+        this.getProductList();
       })
       .catch((err) => {
         swal("Error", "Your items has not been added to the list", "error");
@@ -123,6 +129,17 @@ class AdminDashboard extends React.Component {
   componentDidMount() {
     this.getProductList();
   }
+
+  deleteProductHandler = (id) => {
+    Axios.delete(`${API_URL}/products/${id}`)
+      .then((res) => {
+        swal("success deleted", "Item has been Deleted ", "success");
+        this.getProductList();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
