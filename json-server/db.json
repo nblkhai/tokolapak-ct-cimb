@@ -68,7 +68,7 @@
     {
       "productName": "iPhone 11 Pro Max",
       "price": "23000000",
-      "category": "",
+      "category": "Phone",
       "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
       "desc": "HP Jual Ginjal",
       "id": 4
@@ -78,8 +78,13 @@
     {
       "userid": 2,
       "productId": 2,
-      "quantity": 1,
-      "id": 1
+      "quantity": 4,
+      "id": 1,
+      "productName": "iPhone 11 Pro Max",
+      "price": "23000000",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
+      "desc": "HP Jual Ginjal"
     },
     {
       "userid": 2,
@@ -130,22 +135,45 @@
       "id": 9
     },
     {
-      "userId": 2,
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 13
+    },
+    {
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 14
+    },
+    {
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 15
+    },
+    {
+      "userId": 1,
       "productId": 1,
       "quantity": 1,
-      "id": 10
+      "id": 16
+    },
+    {
+      "userId": 1,
+      "productId": 1,
+      "quantity": 1,
+      "id": 17
     },
     {
       "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 11
-    },
-    {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 12
+      "productId": 1,
+      "quantity": 4,
+      "id": 18,
+      "productName": "iPhone 7 +",
+      "price": 5000000,
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
+      "desc": "HP Terbaikk loh"
     }
   ]
 }

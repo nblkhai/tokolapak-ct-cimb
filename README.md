@@ -1,5 +1,57 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## FINAL PROJECT
+
+15's Project adalah sebuah Production House.
+(https://www.youtube.com/15sproject) Like,Comment and Subscribe ya Bang Hehe..
+Membuat Company Profile dan Penjualan jasa yang disediakan oleh "15's Project".
+
+Jasa yang ditawarkan oleh 15's Project adalah pembuatan video yaitu iklan/short movie/company profile.
+
+<!-- WEB DETAILS -->
+
+1 Home
+--> NAVBAR (Home,About Us,Portfolio,Our Packages,Contact Us)
+--> Sign Up and Sign In
+--> Carousel Showcase yang isinya adalah Poster dari Project yang sudah pernah dibuat
+--> Portfolio yang berisi Trailer dari Project yang sudah pernah dibuat
+2 About Us
+--> Sejarah 15's Project
+--> Orang-orang dibalik layar 15's Project
+3 Portfolio
+Portfolio yang berisi Trailer dari Project yang sudah pernah dibuat
+4 Our Packages
+Packages yang ditawarkan untuk Client
+5 Contact Us
+Contact 15's Project
+
+<!-- CLIENT SAAT MELAKUKAN TRANSAKSI JASA VIDEO 15's PROJECT (Opsi 1)-->
+
+1 Client Register dan Login
+2 Client memilih JENIS video yang akan dibuat (Iklan/Short Movie/Company Profile)
+3 Client memilih DURASI video yang diinginkan (Contoh : 1-3 min, 3-5 min, 5-10 min)
+4 Client memilih LOKASI untuk dilakukannya proses Shooting (indoor/Outdoor)
+5 Client Checkout
+--> Saat Client checkout akan muncul List (Jenis,Durasi,Lokasi) yang dipilih dan ada Total Harga yang harus dibayarkan.
+6 Client melakukan pembayaran
+
+<!-- CLIENT SAAT MELAKUKAN TRANSAKSI JASA VIDEO 15's PROJECT (Opsi 2) -->
+
+1 Client Register dan Login
+2 Client Memilih Paket Pembuatan Video yang sudah ada
+3 Client Checkout
+--> Saat Client checkout akan muncul List (Jenis,Durasi,Lokasi) yang dipilih dan ada Total Harga yang harus dibayarkan.
+4 client melakukan pembayaran
+
+Perbedaan Opsi 1 dan 2 adalah disaat pembayaran.
+Di Opsi 1 bayar berdasarkan pilihan-pilihan. Setiap pilihan memiliki harga yang berbeda.
+di Opsi 2 bayar sesuai dengan packgaes yang dipilih
+
+<!-- ADMIN -->
+
+1 Admin dapat melakukan update/edit Paket (Opsi 2)
+2 Admin dapat melakukan update Content
+
 ## Available Scripts
 
 In the project directory, you can run:

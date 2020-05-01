@@ -15,17 +15,43 @@ class ProductDetails extends React.Component {
     desc: "",
     category: "",
     id: 0,
+    quantity: 0,
   };
 
   addToCartHandler = () => {
-    Axios.post(`${API_URL}/cart`, {
-      userId: this.props.user.id,
-      productId: this.state.productData.id,
-      quantity: 1,
+    Axios.get(`${API_URL}/cart/`, {
+      params: {
+        userId: this.props.user.id,
+        productId: this.state.productData.id,
+      },
     })
       .then((res) => {
-        console.log(res);
-        swal("Add to Cart", "Your item has been added to your cart", "success");
+        if (res.data.length == 0) {
+          Axios.post(`${API_URL}/cart`, {
+            userId: this.props.user.id,
+            productId: this.state.productData.id,
+            quantity: 1,
+          })
+            .then((res) => {
+              console.log(res.data);
+              swal("Success", "Your item has been add to your cart", "success");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          Axios.patch(`${API_URL}/cart/${res.data[0].id}`, {
+            ...this.state.productData,
+            quantity: res.data[0].quantity + 1,
+          })
+            .then((res) => {
+              console.log(res);
+              swal("Success", "Your item has been add to your cart", "success");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -43,14 +69,7 @@ class ProductDetails extends React.Component {
       });
   }
   render() {
-    const {
-      productName,
-      image,
-      price,
-      desc,
-      category,
-      id,
-    } = this.state.productData;
+    const { productName, image, price, desc } = this.state.productData;
     return (
       <div className="container">
         <div className="row py-4">

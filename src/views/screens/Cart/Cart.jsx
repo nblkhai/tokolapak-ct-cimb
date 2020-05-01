@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
@@ -30,8 +31,8 @@ class Cart extends React.Component {
     this.getCartData();
   }
 
-  deleteCart = (id) => {
-    Axios.delete(`${API_URL}/carts/${id}`)
+  deleteCartHandler = (id) => {
+    Axios.delete(`${API_URL}/cart/${id}`)
       .then((res) => {
         console.log(res);
         this.getCartData();
@@ -73,7 +74,7 @@ class Cart extends React.Component {
               type="button"
               className="btn btn-danger"
               value="Delete"
-              onClick={() => this.deleteCart(id)}
+              onClick={() => this.deleteCartHandler(id)}
             />
           </td>
         </tr>

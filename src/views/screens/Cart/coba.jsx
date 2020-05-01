@@ -1,122 +1,20 @@
 class Cart extends React.Component {
   state = {
-    cartData: [],
+    transactionDetails: {
+      userId: "",
+      fullName: "",
+      address: "",
+      email: "",
+      status: "pending",
+      productList: [],
+      subTotals: 0,
+    },
+    listProductCart: [],
   };
 
-  componentDidMount() {
-    this.getCartData();
-  }
+  getDataHandler = () => {
+    let subTotal = 0;
 
-  getCartData = () => {
-    Axios.get(`${API_URL}/carts`, {
-      params: {
-        userId: this.props.user.id,
-        _expand: "product",
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        this.setState({ cartData: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  renderCart = () => {
-    return this.state.cartData.map((val, idx) => {
-      return (
-        <tr>
-          <td>{idx + 1}</td>
-          <td>
-            <img
-              src={val.product.image}
-              style={{ width: "100%", objectFit: "contain", height: "100px" }}
-            />
-          </td>
-          <td>{val.product.productName}</td>
-          <td>
-            {new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }).format(val.product.price)}
-          </td>
-          <td>{val.quantity}</td>
-          <td>
-            <input
-              type="button"
-              className="btn btn-danger"
-              value="Delete"
-              onClick={() => this.deleteHandler(val.id)}
-            />
-          </td>
-        </tr>
-      );
-    });
-  };
-
-  deleteHandler = (id) => {
-    Axios.delete(`${API_URL}/carts/${id}`)
-      .then((res) => {
-        console.log(res);
-        this.getCartData();
-      })
-      .catch((err) => {
-        console.log("gagal");
-      });
-  };
-
-  render() {
-    return (
-      <div className="container">
-        <h2 className="mt-5 text-center">Cart List</h2>
-        <table className="table text-center mt-4">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th colSpan="2">Nama Product</th>
-              <th>Harga</th>
-              <th>Quantity</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {this.state.cartData.length != 0 ? (
-            <tbody>{this.renderCart()}</tbody>
-          ) : (
-            <tbody>
-              <tr>
-                <td colSpan="6">Cart Kosong! silahkan belanja</td>
-              </tr>
-            </tbody>
-          )}
-        </table>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(Cart);
-
-import React from "react";
-import { connect } from "react-redux";
-import "./Cart.css";
-import Axios from "axios";
-import { API_URL } from "../../../constants/API";
-import { Table } from "reactstrap";
-import ButtonUI from "../../components/Button/Button";
-import swal from "sweetalert";
-
-class Cart extends React.Component {
-  state = {
-    arrCart: [],
-  };
-  getCartData() {
     Axios.get(`${API_URL}/cart`, {
       params: {
         userId: this.props.user.id,
@@ -124,140 +22,74 @@ class Cart extends React.Component {
       },
     })
       .then((res) => {
-        this.setState({ arrCart: res.data });
-        console.log(res.data);
+        res.data.map((val) => {
+          const { quantity, product } = val;
+          const { price } = product;
+          subTotal += quantity * price;
+        });
+
+        this.setState({
+          transactionDetails: {
+            ...this.state.transactionDetails,
+            productList: res.data,
+            subTotals: subTotal,
+            fullName: this.props.user.fullName,
+            address: this.props.user.address,
+            userId: this.props.user.id,
+            email: this.props.user.email,
+          },
+        });
+
+        console.log(this.state.transactionDetails.productList);
+        console.log(this.state.transactionDetails.email);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
+
+  deleteDataHandler = (id) => {
+    Axios.delete(`${API_URL}/cart/${id}`)
+      .then((res) => {
+        this.getDataHandler();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   componentDidMount() {
-    this.getCartData();
+    this.getDataHandler();
   }
 
-  deleteCart(id) {
-    Axios.delete(`${API_URL}/carts/${id}`)
-      .then((res) => {
-        this.getCartData();
-        swal(
-          "Delete to cart",
-          "Your item has been deleted from your cart",
-          "success"
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  renderCart = () => {
-    return this.state.arrCart.map((val, idx) => {
-      const { quantity, product, id } = val;
-      const { productName, image, price } = product;
+  renderCartData = () => {
+    const { productList } = this.state.transactionDetails;
+    return productList.map((val, idx) => {
       return (
         <tr>
-          <td>{idx + 1}</td>
-          <td>{productName}</td>
+          <td> {idx + 1} </td>
+          <td style={{ width: "30%" }}>
+            <img
+              className="justify-content-center"
+              style={{ width: "10%" }}
+              src={val.product.image}
+              alt=""
+            />
+          </td>
+          <td> {val.product.productName} </td>
+          <td> {val.quantity} </td>
           <td>
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
-            }).format(price)}
-          </td>
-          <td>{quantity}</td>
-          <td>
-            {""}
-            <img
-              src={image}
-              alt=""
-              style={{ width: "100px", height: "200px", objectFit: "contain" }}
-            ></img>
-          </td>
-          <td>
-            <input
-              type="button"
-              className="btn btn-danger"
-              value="Delete"
-              onClick={() => this.deleteCart(id)}
-            />
-          </td>
-        </tr>
-      );
-    });
-  };
-  render() {
-    return (
-      <Table striped>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Image</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        {this.state.arrCart.length != 0 ? (
-          <tbody>{this.renderCart()}</tbody>
-        ) : (
-          <h3>Cart Kosong! </h3>
-        )}
-      </Table>
-    );
-  }
-}
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-export default connect(mapStateToProps)(Cart);
-
-class Cart extends React.Component {
-  state = {
-    cartData: [],
-  };
-
-  getCartData = () => {
-    Axios.get(`${API_URL}/carts`, {
-      params: {
-        userId: this.props.user.id,
-        _expand: "product",
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        this.setState({ cartData: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  renderCartData = () => {
-    return this.state.cartData.map((val, idx) => {
-      const { quantity, product, id } = val;
-      const { productName, image, price } = product;
-      return (
-        <tr>
-          <td>{idx + 1}</td>
-          <td>{productName}</td>
-          <td>{price}</td>
-          <td>{quantity}</td>
-          <td>
-            {" "}
-            <img
-              src={image}
-              alt=""
-              style={{ width: "100px", height: "200px", objectFit: "contain" }}
-            />{" "}
+            }).format(val.product.price)}
           </td>
           <td>
             <ButtonUI
-              type="outlined"
-              onClick={() => this.deleteCartHandler(id)}
+              type="contained"
+              onClick={() => this.deleteDataHandler(val.id)}
             >
-              Delete Item
+              Delete
             </ButtonUI>
           </td>
         </tr>
@@ -265,41 +97,192 @@ class Cart extends React.Component {
     });
   };
 
-  deleteCartHandler = (id) => {
-    Axios.delete(`${API_URL}/carts/${id}`)
+  checkoutHandlder = () => {
+    const { productList } = this.state.transactionDetails;
+    return productList.map((val, idx) => {
+      const { quantity, product } = val;
+      const { productName, price } = product;
+      const prices = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(price);
+      const totals = quantity * price;
+      return (
+        <tr>
+          <td>{idx + 1}</td>
+          <td>{productName}</td>
+          <td>{quantity}</td>
+          <td>{prices}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(totals)}
+          </td>
+        </tr>
+      );
+    });
+  };
+
+  confirmToPay = () => {
+    Axios.post(`${API_URL}/transactions`, this.state.transactionDetails)
       .then((res) => {
-        this.getCartData();
+        console.log(res);
+        this.state.transactionDetails.productList.map((val) => {
+          this.deleteDataHandler(val.id);
+          console.log(val.productId);
+        });
+        swal(
+          "Transaction Success!",
+          "Your transaction has been processed",
+          "success"
+        );
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  componentDidMount() {
-    this.getCartData();
-  }
-
   render() {
+    const {
+      fullName,
+      address,
+      subTotals,
+      status,
+      email,
+    } = this.state.transactionDetails;
+
     return (
-      <div className="container py-4">
-        {this.state.cartData.length > 0 ? (
-          <Table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Image</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>{this.renderCartData()}</tbody>
-          </Table>
-        ) : (
-          <Alert>
-            Your cart is empty! <Link to="/">Go shopping</Link>
+      <div className="container">
+        {this.state.transactionDetails.productList.length == 0 ? (
+          <Alert color="primary" className="mt-4">
+            Your cart is empty! <Link to="/">Go Shopping</Link>
           </Alert>
+        ) : (
+          <>
+            <center>
+              <Table className="table table-striped" style={{ width: "80%" }}>
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>{this.renderCartData()}</tbody>
+              </Table>
+
+              <div>
+                <ButtonUI
+                  type="outlined"
+                  id="toggler"
+                  style={{ marginBottom: "1rem" }}
+                >
+                  Checkout
+                </ButtonUI>
+              </div>
+            </center>
+
+            <div>
+              <UncontrolledCollapse toggler="#toggler">
+                <Card>
+                  <CardBody>
+                    <div
+                      className="d-flex flex-row py-2 justify-content-center"
+                      style={{ backgroundColor: "#e6eeff" }}
+                    >
+                      <FontAwesomeIcon
+                        className="mr-2 mt-2"
+                        icon={faShoppingCart}
+                        style={{ fontSize: 24 }}
+                      />
+                      <h4 className="mt-2">Checkout</h4>
+                    </div>
+
+                    <div className="mt-3">
+                      <Table>
+                        <thead>
+                          <tr>
+                            <th> No</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Totals</th>
+                          </tr>
+                        </thead>
+                        <tbody>{this.checkoutHandlder()}</tbody>
+                        <tfoot>
+                          <tr>
+                            <td colSpan={4} className="text-center">
+                              <h5>Total</h5>
+                            </td>
+                            <td>
+                              <h5>
+                                {new Intl.NumberFormat("id-ID", {
+                                  style: "currency",
+                                  currency: "IDR",
+                                }).format(subTotals)}
+                              </h5>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </Table>
+                    </div>
+
+                    <div
+                      className="d-flex flex-row py-2 justify-content-center"
+                      style={{ backgroundColor: "#e6eeff" }}
+                    >
+                      <h6 className="mt-1">Details</h6>
+                    </div>
+                    <div>
+                      <Table>
+                        <tr>
+                          <th>Delivery To</th>
+                          <td>:</td>
+                          <td>{fullName}</td>
+                        </tr>
+                        <tr>
+                          <th>Address</th>
+                          <td>:</td>
+                          <td>{address}</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>:</td>
+                          <td>{email}</td>
+                        </tr>
+                        <tr>
+                          <th>Total</th>
+                          <td>:</td>
+                          <td>
+                            {new Intl.NumberFormat("id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                            }).format(subTotals)}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Status</th>
+                          <td>:</td>
+                          <td>{status}</td>
+                        </tr>
+                      </Table>
+                    </div>
+
+                    <div className="mt-4 d-flex flex-row-reverse">
+                      <ButtonUI type="contained" onClick={this.confirmToPay}>
+                        Confirm to Pay
+                      </ButtonUI>
+                    </div>
+                  </CardBody>
+                </Card>
+              </UncontrolledCollapse>
+            </div>
+          </>
         )}
       </div>
     );
@@ -313,3 +296,19 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Cart);
+
+deleteCartHandler = (id) => {
+  Axios.delete(`${API_URL}/carts/${id}`)
+    .then((res) => {
+      console.log(res);
+      this.getCartData();
+      swal(
+        "Delete to cart",
+        "Your item has been deleted from your cart",
+        "success"
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

@@ -1,24 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
+} from "reactstrap";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-import ButtonUI from "../Button/Button.tsx";
-import { connect } from "react-redux";
+import ButtonUI from "../Button/Button";
+import { logoutHandler } from "../../../redux/actions";
+
 import Cookie from "universal-cookie";
-import { logoutHandler } from "../../../redux/actions/user";
+const cookieObject = new Cookie();
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
 };
-const cookiesObject = new Cookie();
+
 class Navbar extends React.Component {
   state = {
     searchBarIsFocused: false,
     searcBarInput: "",
+    dropdownOpen: false,
+  };
+
+  inputHandler = (e, field) => {
+    this.setState({ [field]: e.target.value });
   };
 
   onFocus = () => {
@@ -29,9 +43,13 @@ class Navbar extends React.Component {
     this.setState({ searchBarIsFocused: false });
   };
 
-  logoutDataHandler = () => {
+  onLogout = () => {
     this.props.onLogout();
-    cookiesObject.remove("authData");
+    // this.forceUpdate();
+  };
+
+  toggleDropdown = () => {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   };
 
   render() {
@@ -42,7 +60,10 @@ class Navbar extends React.Component {
             LOGO
           </Link>
         </div>
-        <div style={{ flex: 1 }} className="px-5">
+        <div
+          style={{ flex: 1 }}
+          className="px-5 d-flex flex-row justify-content-start"
+        >
           <input
             onFocus={this.onFocus}
             onBlur={this.onBlur}
@@ -51,43 +72,62 @@ class Navbar extends React.Component {
             }`}
             type="text"
             placeholder="Cari produk impianmu disini"
+            onChange={(e) => this.inputHandler(e, "searchBarInput")}
           />
         </div>
         <div className="d-flex flex-row align-items-center">
           {this.props.user.id ? (
             <>
-              <div className="d-flex flex-row ">
-                <Link
-                  to="/cart"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
+              <Dropdown
+                toggle={this.toggleDropdown}
+                isOpen={this.state.dropdownOpen}
+              >
+                <DropdownToggle tag="div" className="d-flex">
                   <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
                   <p className="small ml-3 mr-4">{this.props.user.username}</p>
-                  <FontAwesomeIcon
-                    className="mr-2"
-                    icon={faShoppingCart}
-                    style={{ fontSize: 24 }}
-                  />
-                  <CircleBg>
-                    <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                      4
-                    </small>
-                  </CircleBg>
-                </Link>
-              </div>
-              <ButtonUI
-                className="ml-3"
-                type="contained"
-                value="Logout"
-                onClick={this.logoutDataHandler}
+                </DropdownToggle>
+                <DropdownMenu className="mt-2">
+                  <DropdownItem>
+                    <Link
+                      style={{ color: "inherit", textDecoration: "none" }}
+                      to="/admin/dashboard"
+                    >
+                      Dashboard
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>Members</DropdownItem>
+                  <DropdownItem>Payments</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+              <Link
+                className="d-flex flex-row"
+                to="/cart"
+                style={{ textDecoration: "none", color: "inherit" }}
               >
+                <FontAwesomeIcon
+                  className="mr-2"
+                  icon={faShoppingCart}
+                  style={{ fontSize: 24 }}
+                />
+                <CircleBg>
+                  <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
+                    4
+                  </small>
+                </CircleBg>
                 <Link
                   style={{ textDecoration: "none", color: "inherit" }}
                   to="/auth"
                 >
-                  Logout
+                  <ButtonUI
+                    className="ml-3"
+                    type="contained"
+                    value="Logout"
+                    onClick={this.onLogout}
+                  >
+                    Logout
+                  </ButtonUI>
                 </Link>
-              </ButtonUI>
+              </Link>
             </>
           ) : (
             <>
@@ -99,12 +139,12 @@ class Navbar extends React.Component {
                   Sign in
                 </Link>
               </ButtonUI>
-              <ButtonUI type="contained ">
+              <ButtonUI type="contained">
                 <Link
                   style={{ textDecoration: "none", color: "inherit" }}
                   to="/auth"
                 >
-                  Sign Up
+                  Sign up
                 </Link>
               </ButtonUI>
             </>
@@ -114,8 +154,7 @@ class Navbar extends React.Component {
     );
   }
 }
-
-const mapStatetoProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     user: state.user,
   };
@@ -123,4 +162,4 @@ const mapStatetoProps = (state) => {
 const mapDispatchToProps = {
   onLogout: logoutHandler,
 };
-export default connect(mapStatetoProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
