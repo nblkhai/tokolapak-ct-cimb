@@ -69,13 +69,11 @@ class Cart extends React.Component {
               style={{ width: "100px", height: "200px", objectFit: "contain" }}
             ></img>
           </td>
-          <td>
-            <input
-              type="button"
-              className="btn btn-danger"
-              value="Delete"
-              onClick={() => this.deleteCartHandler(id)}
-            />
+          <td colSpan={1}>
+            <ButtonUI onClick={() => this.deleteCartHandler(id)}>
+              Delete{" "}
+            </ButtonUI>
+            <ButtonUI>Checkout</ButtonUI>
           </td>
         </tr>
       );

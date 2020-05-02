@@ -9,6 +9,7 @@ const {
   ON_LOGIN_FAIL,
   ON_LOGOUT_SUCCESS,
   ON_REGISTER_FAIL,
+  ON_SEARCHPRODUCT_SUCCESS,
 } = userTypes;
 export const loginHandler = (userData) => {
   return (dispatch) => {
@@ -110,5 +111,12 @@ export const registerHandler = (userData) => {
 export const cookieChecker = () => {
   return {
     type: "COOKIE_CHECK",
+  };
+};
+
+export const searchProduct = (searchInput) => {
+  return {
+    type: ON_SEARCHPRODUCT_SUCCESS,
+    payload: searchInput,
   };
 };
