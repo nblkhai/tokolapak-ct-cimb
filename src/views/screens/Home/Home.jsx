@@ -126,19 +126,24 @@ class Home extends React.Component {
   };
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
-      const { productName } = val;
       if (
-        productName
+        val.productName
           .toLowerCase()
           .startsWith(this.props.user.searchProduct.toLowerCase())
-      )
+      ) {
         return (
-          <ProductCard
-            data={val}
-            key={`bestseller-${val.id}`}
-            className="m-3"
-          />
+          <Link
+            to={`/product/${val.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ProductCard
+              key={`bestseller-${val.id}`}
+              data={val}
+              className="m-2"
+            />
+          </Link>
         );
+      }
     });
   };
 
