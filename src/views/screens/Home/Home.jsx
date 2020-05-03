@@ -124,6 +124,7 @@ class Home extends React.Component {
         console.log(err);
       });
   };
+
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
       if (
