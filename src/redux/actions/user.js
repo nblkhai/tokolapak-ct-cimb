@@ -116,7 +116,7 @@ export const cookieChecker = () => {
 
 export const searchProduct = (searchInput) => {
   return {
-    type: ON_SEARCHPRODUCT_SUCCESS,
+    type: "ON_SEARCH_PRODUCT",
     payload: searchInput,
   };
 };

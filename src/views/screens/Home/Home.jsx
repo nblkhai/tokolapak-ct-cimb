@@ -129,17 +129,17 @@ class Home extends React.Component {
       if (
         val.productName
           .toLowerCase()
-          .startsWith(this.props.user.searchProduct.toLowerCase())
+          .startsWith(this.props.user.searchInput.toLowerCase())
       ) {
         return (
           <Link
-            to={`/product/${val.id}`}
             style={{ textDecoration: "none", color: "inherit" }}
+            to={`/product/${val.id}`}
           >
             <ProductCard
               key={`bestseller-${val.id}`}
-              data={val}
               className="m-2"
+              data={val}
             />
           </Link>
         );
