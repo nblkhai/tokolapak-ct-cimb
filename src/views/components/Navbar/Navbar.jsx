@@ -15,7 +15,11 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
 import ButtonUI from "../Button/Button";
-import { logoutHandler, searchProduct } from "../../../redux/actions";
+import {
+  logoutHandler,
+  searchProduct,
+  cartQuantity,
+} from "../../../redux/actions";
 
 import Cookie from "universal-cookie";
 const cookieObject = new Cookie();
@@ -51,6 +55,9 @@ class Navbar extends React.Component {
   toggleDropdown = () => {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   };
+  componentDidMount() {
+    this.props.cartQuantity(this.props.user.id);
+  }
 
   render() {
     return (
@@ -89,16 +96,50 @@ class Navbar extends React.Component {
                   <p className="small ml-3 mr-4">{this.props.user.username}</p>
                 </DropdownToggle>
                 <DropdownMenu className="mt-2">
-                  <DropdownItem>
-                    <Link
-                      style={{ color: "inherit", textDecoration: "none" }}
-                      to="/admin/dashboard"
-                    >
-                      Dashboard
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem>Members</DropdownItem>
-                  <DropdownItem>Payments</DropdownItem>
+                  {this.props.user.role == "admin" ? (
+                    <>
+                      {""}
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/admin/dashboard"
+                        >
+                          Dashboard
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/admin/members"
+                        >
+                          Members
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        {" "}
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/admin/payment"
+                        >
+                          Payments
+                        </Link>
+                      </DropdownItem>
+                    </>
+                  ) : (
+                    <>
+                      {""}
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/wishlist"
+                        >
+                          Wishlist
+                        </Link>
+                      </DropdownItem>
+
+                      <DropdownItem>History</DropdownItem>
+                    </>
+                  )}
                 </DropdownMenu>
               </Dropdown>
               <Link
@@ -107,13 +148,13 @@ class Navbar extends React.Component {
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <FontAwesomeIcon
-                  className="mr-2"
+                  className="mr-2 mt-2"
                   icon={faShoppingCart}
                   style={{ fontSize: 24 }}
                 />
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    4
+                    {this.props.user.cartQuantity}
                   </small>
                 </CircleBg>
                 <Link
@@ -164,5 +205,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   onLogout: logoutHandler,
   searchProduct,
+  cartQuantity,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

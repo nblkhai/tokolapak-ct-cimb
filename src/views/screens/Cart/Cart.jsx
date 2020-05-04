@@ -8,6 +8,7 @@ import { Table, Alert, Collapse } from "reactstrap";
 import ButtonUI from "../../components/Button/Button";
 import swal from "sweetalert";
 import { UncontrolledCollapse, Button, CardBody, Card } from "reactstrap";
+import { cartQuantity } from "../../../redux/actions";
 
 class Cart extends React.Component {
   state = {
@@ -63,6 +64,8 @@ class Cart extends React.Component {
           "Your item has been deleted from your cart",
           "success"
         );
+        // Buat ngubah qty kalau didelete
+        this.props.cartQuantity(this.props.user.id);
       })
       .catch((err) => {
         console.log(err);
@@ -73,6 +76,19 @@ class Cart extends React.Component {
   //     isCondition: true,
   //   });
   // };
+
+  checkboxHandler = (e, idx) => {
+    const { checked } = e.target;
+    if (checked) {
+      this.setState({ checkoutItems: [...this.state.checkoutItems, idx] });
+    } else {
+      this.setState({
+        checkoutItems: [
+          ...this.state.checkoutItems.filter((val) => val !== idx),
+        ],
+      });
+    }
+  };
   renderCart = () => {
     return this.state.arrCart.map((val, idx) => {
       const { quantity, product, id } = val;
@@ -101,6 +117,11 @@ class Cart extends React.Component {
             <ButtonUI onClick={() => this.deleteCartHandler(id)}>
               Delete{" "}
             </ButtonUI>
+            {/* <input
+              className="form-control"
+              type="checkbox"
+              onChange={(e) => this.checkboxHandler(e, idx)}
+            ></input> */}
           </td>
         </tr>
       );
@@ -240,4 +261,7 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = {
+  cartQuantity,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

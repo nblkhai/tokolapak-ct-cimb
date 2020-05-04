@@ -40,6 +40,8 @@ export default (state = init_state, action) => {
       return { ...state, cookieChecked: true };
     case "ON_SEARCH_PRODUCT":
       return { ...state, cookieChecked: true, searchInput: action.payload };
+    case "CART_QTY":
+      return { ...state, cookieChecked: true, cartQty: action.payload };
     default:
       return { ...state };
   }

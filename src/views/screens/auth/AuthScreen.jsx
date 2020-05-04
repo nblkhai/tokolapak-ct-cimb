@@ -28,9 +28,10 @@ class AuthScreen extends React.Component {
   };
 
   componentDidUpdate() {
+    //JSON.Stringfy untuk mengubah biar jd string, karena cookie tidak bisa menerima sebuah object
     if (this.props.user.id) {
       const cookie = new Cookies();
-      cookie.set("authData", JSON.stringify(this.props.user));
+      cookie.set("authData", JSON.stringify(this.props.user), { path: "/" });
     }
   }
 
@@ -70,7 +71,18 @@ class AuthScreen extends React.Component {
 
     this.props.onLogin(newUser);
   };
+  checkboxHandler = (e, form) => {
+    const { checked } = e.target;
 
+    console.log(checked);
+
+    this.setState({
+      [form]: {
+        ...this.state[form],
+        showPassword: checked,
+      },
+    });
+  };
   renderAuthComponent = () => {
     const { activePage } = this.state;
     if (activePage == "register") {
@@ -104,6 +116,13 @@ class AuthScreen extends React.Component {
             placeholder="Password"
             className="mt-2"
           />
+          <input
+            type="checkbox"
+            onChange={(e) => this.checkboxHandler(e, "registerForm")}
+            className="mt-3"
+            name="showPasswordRegister"
+          />{" "}
+          Show Password
           <div className="d-flex justify-content-center">
             <ButtonUI
               type="contained"

@@ -14,13 +14,16 @@ import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
 
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+import wishlist from "./views/screens/Wishlist/wishlist";
+import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
+import AdminMembers from "./views/screens/Members/AdminMember";
 
 const cookieObj = new Cookie();
 
 class App extends React.Component {
   componentDidMount() {
     setTimeout(() => {
-      let cookieResult = cookieObj.get("authData");
+      let cookieResult = cookieObj.get("authData", { path: "/" });
       if (cookieResult) {
         this.props.keepLogin(cookieResult);
       } else {
@@ -30,7 +33,13 @@ class App extends React.Component {
   }
   renderAdminRoutes = () => {
     if (this.props.user.role === "admin") {
-      return <Route exact path="/admin/dashboard" component={AdminDashboard} />;
+      return (
+        <>
+          <Route exact path="/admin/dashboard" component={AdminDashboard} />
+          <Route exact path="/admin/payment" component={AdminPayment} />
+          <Route exact path="/admin/members" component={AdminMembers} />
+        </>
+      );
     }
   };
   render() {
@@ -48,6 +57,8 @@ class App extends React.Component {
             />
             <Route exact path="/cart" component={Cart} />
             {this.renderAdminRoutes()}
+            <Route exact path="/wishlist" component={wishlist} />
+            {/* <Route exact path="/members" component={members} /> */}
           </Switch>
           <div style={{ height: "120px" }} />
         </>

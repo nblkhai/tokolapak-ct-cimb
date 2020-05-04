@@ -20,6 +20,7 @@ import Colors from "../../../constants/Colors";
 
 import { API_URL } from "../../../constants/API";
 import { connect } from "react-redux";
+import { cartQuantity } from "../../../redux/actions";
 
 const dummy = [
   {
@@ -125,12 +126,13 @@ class Home extends React.Component {
       });
   };
 
+  // .includes --> contoh: "Macbook" yang disearch "book" akan ikutan muncul saat diseacrh
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
       if (
         val.productName
           .toLowerCase()
-          .startsWith(this.props.user.searchInput.toLowerCase())
+          .includes(this.props.user.searchInput.toLowerCase())
       ) {
         return (
           <Link
@@ -150,12 +152,20 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.getBestSellerProduct();
+    this.props.cartQuantity(this.props.user.id);
   }
 
   render() {
     return (
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
+          <Link
+            onClick={() => this.getBestSellerProduct("")}
+            to="/"
+            style={{ color: "inherit" }}
+          >
+            <h6 className="mx-4 font-weight-bold">PRODUCTS</h6>
+          </Link>
           <Link
             onClick={() => this.getBestSellerProduct("Phone")}
             to="/"
@@ -270,4 +280,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+  cartQuantity,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

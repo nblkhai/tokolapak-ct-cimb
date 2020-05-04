@@ -120,3 +120,27 @@ export const searchProduct = (searchInput) => {
     payload: searchInput,
   };
 };
+
+export const cartQuantity = (userId) => {
+  return (dispatch) => {
+    Axios.get(`${API_URL}/cart`, {
+      params: {
+        userId,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        let cartQty = 0;
+        res.data.map((value) => {
+          return (cartQty += value.qty);
+        });
+        dispatch({
+          type: "CART_QTY",
+          payload: cartQty,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
