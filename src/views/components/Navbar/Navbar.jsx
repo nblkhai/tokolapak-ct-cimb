@@ -10,16 +10,14 @@ import {
   DropdownToggle,
   DropdownMenu,
 } from "reactstrap";
+import Axios from "axios";
+import { API_URL } from "../../../constants/API";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
 import ButtonUI from "../Button/Button";
-import {
-  logoutHandler,
-  searchProduct,
-  cartQuantity,
-} from "../../../redux/actions";
+import { logoutHandler, searchProduct } from "../../../redux/actions";
 
 import Cookie from "universal-cookie";
 const cookieObject = new Cookie();
@@ -33,6 +31,7 @@ class Navbar extends React.Component {
     searchBarIsFocused: false,
     searcBarInput: "",
     dropdownOpen: false,
+    qtyNumbers: 0,
   };
 
   inputHandler = (e, field) => {
@@ -56,8 +55,23 @@ class Navbar extends React.Component {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   };
   componentDidMount() {
-    this.props.cartQuantity(this.props.user.id);
+    this.qtyHandler();
   }
+  qtyHandler = () => {
+    Axios.get(`${API_URL}/cart`, {
+      params: {
+        userId: this.props.user.id,
+        _expand: "product",
+      },
+    })
+      .then((res) => {
+        this.setState({ qtyNumbers: res.data.length });
+        console.log(this.state.qtyNumbers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -137,7 +151,15 @@ class Navbar extends React.Component {
                         </Link>
                       </DropdownItem>
 
-                      <DropdownItem>History</DropdownItem>
+                      <DropdownItem>
+                        {" "}
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/history"
+                        >
+                          History
+                        </Link>
+                      </DropdownItem>
                     </>
                   )}
                 </DropdownMenu>
@@ -154,7 +176,7 @@ class Navbar extends React.Component {
                 />
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    {this.props.user.cartQuantity}
+                    {this.state.qtyNumbers}
                   </small>
                 </CircleBg>
                 <Link
@@ -205,6 +227,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   onLogout: logoutHandler,
   searchProduct,
-  cartQuantity,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

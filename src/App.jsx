@@ -17,7 +17,7 @@ import { userKeepLogin, cookieChecker } from "./redux/actions";
 import wishlist from "./views/screens/Wishlist/wishlist";
 import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
 import AdminMembers from "./views/screens/Members/AdminMember";
-
+import History from "./views/screens/History/History";
 const cookieObj = new Cookie();
 
 class App extends React.Component {
@@ -58,7 +58,7 @@ class App extends React.Component {
             <Route exact path="/cart" component={Cart} />
             {this.renderAdminRoutes()}
             <Route exact path="/wishlist" component={wishlist} />
-            {/* <Route exact path="/members" component={members} /> */}
+            <Route exact path="/history" component={History} />
           </Switch>
           <div style={{ height: "120px" }} />
         </>

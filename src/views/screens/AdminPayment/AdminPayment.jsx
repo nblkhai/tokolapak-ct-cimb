@@ -20,13 +20,13 @@ class AdminPayment extends React.Component {
         console.log(err);
       });
   };
-  paymentBtnHandler = (idx) => {
-    this.setState({
-      editForm: {
-        ...this.state.productList[idx],
-      },
-    });
-  };
+  // paymentBtnHandler = (idx) => {
+  //   this.setState({
+  //     editForm: {
+  //       ...this.state.productList[idx],
+  //     },
+  //   });
+  // };
   confirmPaymentHandler = (id) => {
     // Axios.put(
     //   `${API_URL}/transactions/${this.state.editForm.id}`,

@@ -41,11 +41,10 @@ class ProductDetails extends React.Component {
             });
         } else {
           Axios.patch(`${API_URL}/cart/${res.data[0].id}`, {
-            ...this.state.productData,
             quantity: res.data[0].quantity + 1,
           })
             .then((res) => {
-              console.log(res);
+              console.log(res.data);
               swal("Success", "Your item has been add to your cart", "success");
             })
             .catch((err) => {

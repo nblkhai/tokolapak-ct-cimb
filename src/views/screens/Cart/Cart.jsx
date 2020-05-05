@@ -13,12 +13,15 @@ import { cartQuantity } from "../../../redux/actions";
 class Cart extends React.Component {
   state = {
     arrCart: [],
+    datePayment: new Date(),
     transactionDetails: {
       userId: 0,
       items: [],
       totalPrice: 0,
       status: "pending",
       isCondition: true,
+      transactionDate: "",
+      dateDone: "",
     },
   };
   getCartData() {
@@ -42,10 +45,13 @@ class Cart extends React.Component {
             userId: this.props.user.id,
             items: res.data,
             totalPrice: fixedPrice,
+            transactionDate: this.state.datePayment.toLocaleDateString(),
           },
         });
       })
       .catch((err) => {
+        console.log(this.props.user.id);
+
         console.log(err);
       });
     // console.log(fixedPrice);
@@ -165,17 +171,47 @@ class Cart extends React.Component {
   };
 
   confirmToPay = () => {
-    Axios.post(`${API_URL}/transactions`, this.state.transactionDetails)
+    Axios.get(`${API_URL}/cart`, {
+      params: {
+        userId: this.props.user.id,
+        _expand: "product",
+      },
+    })
       .then((res) => {
-        console.log(res.data);
-        this.state.arrCart.map((val) => {
-          return this.deleteCartHandler(val.id);
+        res.data.map((val) => {
+          Axios.delete(`${API_URL}/cart/${val.id}`)
+            .then((res) => {
+              console.log(res);
+              swal("Success", "Transaksi anda berhasil", "success");
+              this.getCartData();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         });
-        // this.setState.transactionDetails({ isCondition: true });
-        swal("Thank you!", "Your Transaction is Success", "success");
+        Axios.post(`${API_URL}/transactions`, this.state.transactionDetails)
+          .then((res) => {
+            this.state.arrCart.map((val) => {
+              Axios.post(`${API_URL}/transactionDetails`, {
+                productId: val.product.id,
+                transactionsId: res.data.id,
+                price: val.product.price,
+                totalPrice: val.product.price * val.quantity,
+                quantity: val.quantity,
+              })
+                .then((res) => {
+                  console.log(res);
+                })
+                .then((err) => {
+                  console.log(err);
+                });
+            });
+          })
+          .then((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
-        alert("ERRROOORR");
         console.log(err);
       });
   };

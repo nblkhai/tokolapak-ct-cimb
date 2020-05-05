@@ -5,16 +5,8 @@
       "password": "bella",
       "email": "bella@mail.com",
       "fullName": "bella",
-      "role": "user",
-      "id": 1
-    },
-    {
-      "username": "admin",
-      "password": "123",
-      "email": "admin@mail.com",
-      "fullName": "admin sayang",
       "role": "admin",
-      "id": 2
+      "id": 1
     },
     {
       "username": "doraemon",
@@ -41,15 +33,41 @@
       "id": 4
     }
   ],
-  "products": [
+  "transactionDetails": [
     {
-      "productName": "iPad Pro 3",
-      "price": 15000000,
-      "category": "Tablet",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
-      "desc": "iPad Terbaikk loh",
+      "productId": 3,
+      "transactionsId": 6,
+      "price": 20000000,
+      "totalPrice": 20000000,
+      "quantity": 1,
+      "id": 1
+    },
+    {
+      "productId": 3,
+      "transactionsId": 7,
+      "price": 20000000,
+      "totalPrice": 60000000,
+      "quantity": 3,
       "id": 2
     },
+    {
+      "productId": 5,
+      "transactionsId": 7,
+      "price": "30000000",
+      "totalPrice": 120000000,
+      "quantity": 4,
+      "id": 3
+    },
+    {
+      "productId": 3,
+      "transactionsId": 8,
+      "price": 20000000,
+      "totalPrice": 20000000,
+      "quantity": 1,
+      "id": 4
+    }
+  ],
+  "products": [
     {
       "productName": "Macbook Pro",
       "price": 20000000,
@@ -57,14 +75,6 @@
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
       "desc": "Laptop Terbaikk loh",
       "id": 3
-    },
-    {
-      "productName": "iPhone 11 Pro Max",
-      "price": "23000000",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
-      "desc": "HP Jual Ginjal",
-      "id": 4
     },
     {
       "productName": "iMac",
@@ -75,42 +85,7 @@
       "id": 5
     }
   ],
-  "cart": [
-    {
-      "userid": 2,
-      "productId": 2,
-      "quantity": 4,
-      "id": 1,
-      "productName": "iPhone 11 Pro Max",
-      "price": "23000000",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/wysiwyg/iPhone/comparison/compare-iphone11-2.png",
-      "desc": "HP Jual Ginjal"
-    },
-    {
-      "userid": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 2
-    },
-    {
-      "userid": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 3
-    },
-    {
-      "userId": 4,
-      "productId": 2,
-      "quantity": 1,
-      "id": 8
-    },
-    {
-      "userId": 1,
-      "quantity": 5,
-      "id": 9
-    }
-  ],
+  "cart": [],
   "transactions": [
     {
       "userId": 1,
@@ -119,6 +94,68 @@
       "transactionDate": "22-03-2020",
       "dateDone": "5/4/2020",
       "id": 1
+    },
+    {
+      "userId": 1,
+      "totalPrice": 23000000,
+      "id": 2,
+      "status": "SUDAH DIBAYAR",
+      "dateDone": "5/4/2020"
+    },
+    {
+      "userId": 1,
+      "totalPrice": 15000000,
+      "id": 3,
+      "status": "SUDAH DIBAYAR",
+      "dateDone": "5/4/2020"
+    },
+    {
+      "userId": 1,
+      "totalPrice": 61000000,
+      "id": 4,
+      "status": "SUDAH DIBAYAR",
+      "dateDone": "5/4/2020"
+    },
+    {
+      "userId": 2,
+      "status": "SUDAH DIBAYAR",
+      "id": 5,
+      "dateDone": "5/4/2020"
+    },
+    {
+      "userId": 2,
+      "status": "SUDAH DIBAYAR",
+      "id": 6,
+      "dateDone": "5/4/2020"
+    },
+    {
+      "userId": 2,
+      "status": "pending",
+      "id": 7
+    },
+    {
+      "userId": 2,
+      "items": [
+        {
+          "userId": 2,
+          "productId": 3,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "Macbook Pro",
+            "price": 20000000,
+            "category": "Laptop",
+            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
+            "desc": "Laptop Terbaikk loh",
+            "id": 3
+          }
+        }
+      ],
+      "totalPrice": 20000000,
+      "transactionDate": "5/4/2020",
+      "id": 8,
+      "status": "SUDAH DIBAYAR",
+      "dateDone": "5/4/2020"
     }
   ],
   "wishlist": []

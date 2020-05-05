@@ -160,7 +160,7 @@ class Home extends React.Component {
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
           <Link
-            onClick={() => this.getBestSellerProduct("")}
+            onClick={() => this.getBestSellerProduct()}
             to="/"
             style={{ color: "inherit" }}
           >
