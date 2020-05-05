@@ -148,7 +148,7 @@ class AdminPayment extends React.Component {
         console.log(err);
       });
   };
-  paymentlistAccepted = () => {
+  getPaymentListAccept = () => {
     Axios.get(`${API_URL}/transactions`, {
       params: {
         status: "SUDAH DIBAYAR",
@@ -163,7 +163,7 @@ class AdminPayment extends React.Component {
   };
   componentDidMount() {
     this.getPaymentList();
-    this.paymentlistAccepted();
+    this.getPaymentListAccept();
   }
   confirmPaymentHandler = (id) => {
     console.log(id);
@@ -174,7 +174,7 @@ class AdminPayment extends React.Component {
       .then((res) => {
         swal("Success!", "Your item has been edited", "success");
         this.getPaymentList();
-        this.paymentlistAccepted();
+        this.getPaymentListAccept();
       })
       .catch((err) => {
         swal("Error!", "Your item could not be edited", "error");
@@ -203,7 +203,7 @@ class AdminPayment extends React.Component {
                 type="outlined"
                 onClick={() => this.setState({ activePage: "login" })}
               >
-                SUDAH DIBAYAR
+                Accept
               </ButtonUI>
             </div>
             {this.renderAuthComponent()}

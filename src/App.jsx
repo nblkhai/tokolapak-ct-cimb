@@ -12,7 +12,7 @@ import AuthScreen from "./views/screens/auth/AuthScreen";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
-
+import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
 import wishlist from "./views/screens/Wishlist/wishlist";
 import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
@@ -59,6 +59,7 @@ class App extends React.Component {
             {this.renderAdminRoutes()}
             <Route exact path="/wishlist" component={wishlist} />
             <Route exact path="/history" component={History} />
+            <Route exact path="/*" component={PageNotFound} />
           </Switch>
           <div style={{ height: "120px" }} />
         </>
