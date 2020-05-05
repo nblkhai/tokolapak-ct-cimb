@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
 import {
@@ -54,24 +53,24 @@ class Navbar extends React.Component {
   toggleDropdown = () => {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   };
-  componentDidMount() {
-    this.qtyHandler();
-  }
-  qtyHandler = () => {
-    Axios.get(`${API_URL}/cart`, {
-      params: {
-        userId: this.props.user.id,
-        _expand: "product",
-      },
-    })
-      .then((res) => {
-        this.setState({ qtyNumbers: res.data.length });
-        console.log(this.state.qtyNumbers);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // componentDidMount() {
+  //   this.qtyHandler();
+  // }
+  // qtyHandler = () => {
+  //   Axios.get(`${API_URL}/cart`, {
+  //     params: {
+  //       userId: this.props.user.id,
+  //       _expand: "product",
+  //     },
+  //   })
+  //     .then((res) => {
+  //       this.setState({ qtyNumbers: res.data.length });
+  //       console.log(this.state.qtyNumbers);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   render() {
     return (
@@ -136,6 +135,14 @@ class Navbar extends React.Component {
                           to="/admin/payment"
                         >
                           Payments
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/admin/pageReport"
+                        >
+                          Page Report
                         </Link>
                       </DropdownItem>
                     </>

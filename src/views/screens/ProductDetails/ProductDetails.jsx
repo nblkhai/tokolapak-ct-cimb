@@ -8,24 +8,27 @@ import swal from "sweetalert";
 
 class ProductDetails extends React.Component {
   state = {
-    productData: {},
-    productName: "",
-    image: "",
-    price: 0,
-    desc: "",
-    category: "",
-    id: 0,
-    quantity: 0,
+    productData: {
+      productName: "",
+      image: "",
+      price: 0,
+      desc: "",
+      category: "",
+      id: 0,
+      quantity: 0,
+    },
   };
 
   addToCartHandler = () => {
-    Axios.get(`${API_URL}/cart/`, {
+    Axios.get(`${API_URL}/cart`, {
       params: {
         userId: this.props.user.id,
         productId: this.state.productData.id,
       },
     })
       .then((res) => {
+        alert("hehe");
+        console.log(this.state.productData.id);
         if (res.data.length == 0) {
           Axios.post(`${API_URL}/cart`, {
             userId: this.props.user.id,

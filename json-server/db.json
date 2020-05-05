@@ -165,6 +165,57 @@
       "totalPrice": 30000000,
       "quantity": 1,
       "id": 15
+    },
+    {
+      "productId": 7,
+      "transactionsId": 21,
+      "price": "15000000",
+      "totalPrice": 15000000,
+      "quantity": 1,
+      "id": 16
+    },
+    {
+      "productId": 5,
+      "transactionsId": 22,
+      "price": "30000000",
+      "totalPrice": 30000000,
+      "quantity": 1,
+      "id": 17
+    },
+    {
+      "productId": 7,
+      "transactionsId": 23,
+      "price": "15000000",
+      "totalPrice": 15000000,
+      "quantity": 1,
+      "id": 18
+    },
+    {
+      "productId": 3,
+      "transactionsId": 24,
+      "price": 20000000,
+      "totalPrice": 20000000,
+      "quantity": 1,
+      "status": "pending",
+      "id": 19
+    },
+    {
+      "productId": 6,
+      "transactionsId": 25,
+      "price": "20000000",
+      "totalPrice": 20000000,
+      "quantity": 1,
+      "status": "pending",
+      "id": 20
+    },
+    {
+      "productId": 7,
+      "transactionsId": 26,
+      "price": "15000000",
+      "totalPrice": 15000000,
+      "quantity": 1,
+      "status": "pending",
+      "id": 21
     }
   ],
   "products": [
@@ -204,7 +255,8 @@
   "cart": [
     {
       "userId": 1,
-      "quantity": 11,
+      "productId": 6,
+      "quantity": 1,
       "id": 1
     }
   ],
@@ -222,7 +274,7 @@
       "totalPrice": 23000000,
       "id": 2,
       "status": "SUDAH DIBAYAR",
-      "dateDone": "5/4/2020"
+      "dateDone": "5/5/2020"
     },
     {
       "userId": 1,
@@ -252,8 +304,9 @@
     },
     {
       "userId": 2,
-      "status": "pending",
-      "id": 7
+      "status": "SUDAH DIBAYAR",
+      "id": 7,
+      "dateDone": "5/5/2020"
     },
     {
       "userId": 2,
@@ -458,20 +511,185 @@
     {
       "userId": 3,
       "totalPrice": 60000000,
-      "status": "pending",
-      "id": 17
+      "status": "SUDAH DIBAYAR",
+      "id": 17,
+      "dateDone": "5/5/2020"
     },
     {
       "userId": 3,
       "totalPrice": 20000000,
-      "status": "pending",
-      "id": 18
+      "status": "SUDAH DIBAYAR",
+      "id": 18,
+      "dateDone": "5/5/2020"
     },
     {
       "id": 19
     },
     {
       "id": 20
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "userId": 1,
+          "productId": 7,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "Samsung Galaxy S10",
+            "price": "15000000",
+            "category": "Phone",
+            "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
+            "desc": "Hp Samsung Mahal",
+            "id": 7
+          }
+        }
+      ],
+      "totalPrice": 15000000,
+      "transactionDate": "5/5/2020",
+      "id": 21
+    },
+    {
+      "userId": 6,
+      "items": [
+        {
+          "userId": 6,
+          "productId": 5,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "iMac",
+            "price": "30000000",
+            "category": "Desktop",
+            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
+            "desc": "iMac Mahal Banget YaAllah",
+            "id": 5
+          }
+        }
+      ],
+      "totalPrice": 30000000,
+      "transactionDate": "5/5/2020",
+      "id": 22
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "userId": 1,
+          "productId": 7,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "Samsung Galaxy S10",
+            "price": "15000000",
+            "category": "Phone",
+            "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
+            "desc": "Hp Samsung Mahal",
+            "id": 7
+          }
+        }
+      ],
+      "totalPrice": 15000000,
+      "transactionDate": "5/5/2020",
+      "id": 23
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "userId": 1,
+          "productId": 3,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "Macbook Pro",
+            "price": 20000000,
+            "category": "Laptop",
+            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
+            "desc": "Laptop Terbaikk loh",
+            "id": 3
+          }
+        }
+      ],
+      "totalPrice": 20000000,
+      "transactionDate": "5/5/2020",
+      "id": 24
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "userId": 1,
+          "productId": 6,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "iPhone 11 Pro",
+            "price": "20000000",
+            "category": "Phone",
+            "image": "https://ibox.co.id/media/wysiwyg/iPhone/main-lp-iphone-11-pro.png",
+            "desc": "Iphone 11 Pro Jual Ginjal",
+            "id": 6
+          }
+        }
+      ],
+      "totalPrice": 20000000,
+      "transactionDate": "5/5/2020",
+      "id": 25
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "userId": 1,
+          "productId": 7,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "Samsung Galaxy S10",
+            "price": "15000000",
+            "category": "Phone",
+            "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
+            "desc": "Hp Samsung Mahal",
+            "id": 7
+          }
+        }
+      ],
+      "totalPrice": 15000000,
+      "transactionDate": "5/5/2020",
+      "id": 26
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "userId": 1,
+          "productId": 5,
+          "quantity": 1,
+          "id": 1,
+          "product": {
+            "productName": "iMac",
+            "price": "30000000",
+            "category": "Desktop",
+            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
+            "desc": "iMac Mahal Banget YaAllah",
+            "id": 5
+          }
+        }
+      ],
+      "totalPrice": 30000000,
+      "transactionDate": "5/5/2020",
+      "id": 27
+    },
+    {
+      "productId": 5,
+      "transactionsId": 27,
+      "price": "30000000",
+      "totalPrice": 30000000,
+      "quantity": 1,
+      "status": "pending",
+      "id": 28
     }
   ],
   "wishlist": []

@@ -2,7 +2,6 @@ import React from "react";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
-import TextField from "../../components/TextField/TextField";
 import swal from "sweetalert";
 
 class AdminPayment extends React.Component {
@@ -39,19 +38,26 @@ class AdminPayment extends React.Component {
                 Confirm Payment
               </ButtonUI>
             </td>
-          </tr>
-          <tr
-          // className={`collapse-item ${
-          //   this.state.includes(idx) ? "active" : null
-          // }`}
-          >
-            <div className="d-flex flex-column align-items-center"></div>
+            <td>
+              {val.transactionDetails.map((val, idx) => {
+                return (
+                  <tr>
+                    <td>
+                      {val.productId}
+                      {val.price}
+                      {val.transactionId}
+                      {val.quantity}
+                    </td>
+                  </tr>
+                );
+              })}{" "}
+            </td>
           </tr>
         </>
       );
     });
   };
-  renderPaymentListAccept = () => {
+  paymentListAccepted = () => {
     return this.state.productListAccept.map((val, idx) => {
       const { id, totalPrice, status, dateDone } = val;
       return (
@@ -69,18 +75,11 @@ class AdminPayment extends React.Component {
               }).format(totalPrice)}{" "}
             </td>
           </tr>
-          <tr
-          // className={`collapse-item ${
-          //   this.state.includes(idx) ? "active" : null
-          // }`}
-          >
-            <div className="d-flex flex-column align-items-center"></div>
-          </tr>
         </>
       );
     });
   };
-  renderAuthComponent = () => {
+  renderAdminPaymentlist = () => {
     const { activePage } = this.state;
     if (activePage == "register") {
       return (
@@ -100,6 +99,7 @@ class AdminPayment extends React.Component {
                     <th>Transaction Done</th>
                     <th>Price</th>
                     <th>Action</th>
+                    <th>Transaction Details</th>
                   </tr>
                 </thead>
                 <tbody>{this.renderPaymentList()}</tbody>
@@ -125,9 +125,10 @@ class AdminPayment extends React.Component {
                     <th>Status</th>
                     <th>Transaction Done</th>
                     <th>Price</th>
+                    <th>Transaction Details</th>
                   </tr>
                 </thead>
-                <tbody>{this.renderPaymentListAccept()}</tbody>
+                <tbody>{this.paymentListAccepted()}</tbody>
               </table>
             </div>
           </div>
@@ -139,9 +140,11 @@ class AdminPayment extends React.Component {
     Axios.get(`${API_URL}/transactions`, {
       params: {
         status: "pending",
+        _embed: "transactionDetails",
       },
     })
       .then((res) => {
+        console.log(res.data);
         this.setState({ productList: res.data });
       })
       .catch((err) => {
@@ -152,6 +155,7 @@ class AdminPayment extends React.Component {
     Axios.get(`${API_URL}/transactions`, {
       params: {
         status: "SUDAH DIBAYAR",
+        _embed: "transactionDetails",
       },
     })
       .then((res) => {
@@ -172,12 +176,12 @@ class AdminPayment extends React.Component {
       dateDone: this.state.datePayment.toLocaleDateString(),
     })
       .then((res) => {
-        swal("Success!", "Your item has been edited", "success");
+        swal("Success!", "Your item has been Paid", "success");
         this.getPaymentList();
         this.paymentlistAccepted();
       })
       .catch((err) => {
-        swal("Error!", "Your item could not be edited", "error");
+        swal("Error!", "Your item could not be Paid", "error");
         console.log(err);
       });
   };
@@ -206,7 +210,7 @@ class AdminPayment extends React.Component {
                 SUDAH DIBAYAR
               </ButtonUI>
             </div>
-            {this.renderAuthComponent()}
+            {this.renderAdminPaymentlist()}
           </div>
         </div>
       </div>

@@ -1,28 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
+import { Table, Alert, Collapse } from "reactstrap";
 import ButtonUI from "../../components/Button/Button";
-import { Table, Alert } from "reactstrap";
-import { Link } from "react-router-dom";
-import TextField from "../../components/TextField/TextField";
 import swal from "sweetalert";
+import {
+  UncontrolledCollapse,
+  Button,
+  CardBody,
+  Card,
+  Select,
+} from "reactstrap";
+import { cartQuantity } from "../../../redux/actions";
 
 class Cart extends React.Component {
   state = {
-    cartData: [],
-    checkOutItem: [],
-    cond: false,
-    ongkosKirim: 0,
-    totalPrice: 0,
+    arrCart: [],
+    datePayment: new Date(),
+    transactionDetails: {
+      userId: 0,
+      items: [],
+      totalPrice: 0,
+      status: "pending",
+      isCondition: true,
+      transactionDate: "",
+      dateDone: "",
+    },
+    ongkosKirim: "",
   };
   componentDidMount() {
-    this.addCart();
+    this.getCartData();
   }
 
-  addCart = () => {
-    let hargaTotal = 0;
+  inputHandler = (e) => {
+    let { value } = e.target;
+    this.setState({
+      ongkosKirim: value,
+    });
+  };
+  // Cuma Bisa nampilin sameDay
+  getCartData = () => {
     Axios.get(`${API_URL}/cart`, {
       params: {
         userId: this.props.user.id,
@@ -30,31 +50,84 @@ class Cart extends React.Component {
       },
     })
       .then((res) => {
-        this.setState({ cartData: res.data });
-        console.log(this.state.cartData);
-        this.state.cartData.map((val) => {
-          hargaTotal += val.quantity * val.product.price;
+        // this.setState({ arrCart: res.data });
+        console.log(res.data);
+        let fixedPrice = 0;
+        let total = 0;
+        res.data.map((val) => {
+          fixedPrice += val.quantity * val.product.price;
         });
+        console.log(this.state.ongkosKirim);
+        if (this.state.ongkosKirim == "economy") {
+          total = fixedPrice;
+        } else if (this.state.ongkosKirim == "instant") {
+          total = fixedPrice + 100000;
+        } else if (this.state.ongkosKirim == "sameday") {
+          total = fixedPrice + 50000;
+        } else {
+          total = fixedPrice + 20000;
+        }
+
         this.setState({
-          totalPrice: hargaTotal,
+          arrCart: res.data,
+          transactionDetails: {
+            userId: this.props.user.id,
+            items: res.data,
+            totalPrice: total,
+            transactionDate: this.state.datePayment.toLocaleDateString(),
+          },
         });
       })
       .catch((err) => {
-        alert("error");
         console.log(err);
       });
   };
 
+  deleteCartHandler = (id) => {
+    Axios.delete(`${API_URL}/cart/${id}`)
+      .then((res) => {
+        console.log(res);
+        this.getCartData();
+        swal(
+          "Delete to cart",
+          "Your item has been deleted from your cart",
+          "success"
+        );
+        // Buat ngubah qty kalau didelete
+        this.props.cartQuantity(this.props.user.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // transaksiCart = () => {
+  //   this.setState({
+  //     isCondition: true,
+  //   });
+  // };
+
+  checkboxHandler = (e, idx) => {
+    const { checked } = e.target;
+    if (checked) {
+      this.setState({ checkoutItems: [...this.state.checkoutItems, idx] });
+    } else {
+      this.setState({
+        checkoutItems: [
+          ...this.state.checkoutItems.filter((val) => val !== idx),
+        ],
+      });
+    }
+  };
   renderCart = () => {
-    return this.state.cartData.map((val, idx) => {
+    return this.state.arrCart.map((val, idx) => {
       const { quantity, product, id } = val;
-      const { productName, price, image } = product;
+      const { productName, image, price } = product;
+
       return (
-        <tr key={`cartData-${id}`}>
+        <tr>
           <td>{idx + 1}</td>
           <td>{productName}</td>
           <td>
-            {" "}
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
@@ -62,38 +135,37 @@ class Cart extends React.Component {
           </td>
           <td>{quantity}</td>
           <td>
-            <img src={image} width="80" />
+            {""}
+            <img
+              src={image}
+              alt=""
+              style={{ width: "100px", height: "200px", objectFit: "contain" }}
+            ></img>
           </td>
-
-          <td>
-            <ButtonUI onClick={() => this.deleteCartHandlerHandler(id)}>
+          <td colSpan={1}>
+            <ButtonUI onClick={() => this.deleteCartHandler(id)}>
               Delete{" "}
             </ButtonUI>
+            {/* <input
+              className="form-control"
+              type="checkbox"
+              onChange={(e) => this.checkboxHandler(e, idx)}
+            ></input> */}
           </td>
         </tr>
       );
     });
   };
 
-  cartTransactio = () => {
-    this.setState({
-      cond: true,
-    });
-  };
-
-  inputHandler = (e, field) => {
-    let { value } = e.target;
-    this.setState({
-      [field]: value,
-    });
-  };
-
-  renderTraksaksi = () => {
-    return this.state.cartData.map((val, idx) => {
+  checkoutHandler = () => {
+    let totalPrice;
+    let totalHarga;
+    return this.state.arrCart.map((val, idx) => {
       const { quantity, product, id } = val;
-      const { productName, price, image } = product;
+      const { productName, image, price } = product;
+      totalPrice = quantity * product.price;
       return (
-        <tr key={`cartData-${id}`}>
+        <tr>
           <td>{idx + 1}</td>
           <td>{productName}</td>
           <td>
@@ -104,13 +176,18 @@ class Cart extends React.Component {
           </td>
           <td>{quantity}</td>
           <td>
-            <img src={image} width="80" />
+            {""}
+            <img
+              src={image}
+              alt=""
+              style={{ width: "100px", height: "200px", objectFit: "contain" }}
+            ></img>
           </td>
           <td>
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
-            }).format(quantity * price + +this.state.ongkosKirim)}
+            }).format(totalPrice)}
           </td>
         </tr>
       );
@@ -138,13 +215,15 @@ class Cart extends React.Component {
         });
         Axios.post(`${API_URL}/transactions`, this.state.transactionDetails)
           .then((res) => {
-            this.state.cartData.map((val) => {
-              Axios.post(`${API_URL}/transactionDetails`, {
+            this.state.arrCart.map((val) => {
+              console.log(this.state.ongkosKirim);
+              Axios.post(`${API_URL}/transactions`, {
                 productId: val.product.id,
                 transactionsId: res.data.id,
-                price: val.product.price,
+                price: val.product.price + this.state.ongkosKirim,
                 totalPrice: val.product.price * val.quantity,
                 quantity: val.quantity,
+                status: "pending",
               })
                 .then((res) => {
                   console.log(res);
@@ -163,88 +242,91 @@ class Cart extends React.Component {
       });
   };
 
-  deleteCartHandler = (id) => {
-    Axios.get(`${API_URL}/cart/${id}`)
-      .then((res) => {
-        Axios.delete(`${API_URL}/cart/${id}`)
-          .then((res) => {
-            console.log(res.data);
-            alert("sudah terhapus");
-            this.addCart();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   render() {
     return (
-      <div className="container py-4">
-        {this.state.cartData.length > 0 ? (
-          <>
-            <Table>
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Product Name</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Image</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>{this.renderCart()}</tbody>
-            </Table>
-            <div className="col-12 mt-3">
-              <select
-                value={this.state.ongkosKirim}
-                className="custom-text-input h-100 pl-3"
-                onChange={(e) => this.inputHandler(e, "ongkosKirim")}
-              >
-                <option value="0">Economy</option>
-                <option value="100000">instant</option>
-                <option value="50000">Sameday</option>
-                <option value="20000">Express</option>
-              </select>
-            </div>
-            <div className="d-flex justify-content-center">
-              <ButtonUI onClick={this.cartTransactio}>CheckOut</ButtonUI>
-            </div>
-            {!this.state.cond ? null : (
-              <>
-                <h4>Konfirmasi Total Pembelian Anda</h4>
-                <Table style={{ marginTop: "10px" }}>
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Product Name</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Image</th>
-                      <th>Total Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>{this.renderTraksaksi()}</tbody>
-                </Table>
-                <div className="d-flex flex-column">
-                  <center>
-                    <ButtonUI onClick={this.confirmToPay} type="outlined">
-                      Confirm To Pay
-                    </ButtonUI>
-                  </center>
+      <div className="container">
+        <Table striped>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {/* <tbody>{this.renderCart()}</tbody> */}
+          <div className="col-12 mt-3">
+            <select
+              value={this.state.ongkosKirim}
+              className="custom-text-input h-100 pl-3"
+              onChange={(e) => this.inputHandler(e)}
+            >
+              <option value="economy">Economy</option>
+              <option value="instant">Instant</option>
+              <option value="sameday">Sameday</option>
+              <option value="express">Express</option>
+            </select>
+          </div>
+
+          {this.state.arrCart.length != 0 ? (
+            <tbody>{this.renderCart()}</tbody>
+          ) : (
+            <Alert>
+              Your cart is empty! <Link to="/">Go shopping</Link>
+            </Alert>
+          )}
+        </Table>
+        <div>
+          <Button color="primary" id="toggler" style={{ marginBottom: "1rem" }}>
+            CheckOut
+          </Button>
+          <UncontrolledCollapse toggler="#toggler">
+            <Card>
+              <CardBody>
+                <div>
+                  <h4 className="mt-2">Checkout</h4>
                 </div>
-              </>
-            )}
-          </>
-        ) : (
-          <Alert>
-            Your Cart is Empty!<Link to="/">Go Shopping</Link>
-          </Alert>
-        )}
+                <div>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Image</th>
+                        <th>Totals</th>
+                      </tr>
+                    </thead>
+                    <tbody>{this.checkoutHandler()}</tbody>{" "}
+                    <tfoot>
+                      <tr>
+                        <td colSpan={4} className="text-center">
+                          <h5>Total Price</h5>
+                        </td>
+                        <td>
+                          <h5>
+                            {new Intl.NumberFormat("id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                            }).format(this.state.transactionDetails.totalPrice)}
+                          </h5>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </Table>
+                </div>
+                <div>
+                  <ButtonUI type="contained" onClick={this.confirmToPay}>
+                    Confirm to Pay
+                  </ButtonUI>
+                </div>
+              </CardBody>
+            </Card>
+          </UncontrolledCollapse>
+        </div>
       </div>
     );
   }
@@ -254,4 +336,7 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = {
+  cartQuantity,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
