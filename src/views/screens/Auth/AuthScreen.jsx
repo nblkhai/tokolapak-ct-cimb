@@ -103,6 +103,7 @@ class AuthScreen extends React.Component {
             onChange={(e) => this.inputHandler(e, "password", "registerForm")}
             placeholder="Password"
             className="mt-2"
+            type={this.state.registerForm.showPassword ? "text" : "password"}
           />
           <div className="d-flex justify-content-center">
             <ButtonUI
