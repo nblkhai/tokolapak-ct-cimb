@@ -12,38 +12,49 @@ import AuthScreen from "./views/screens/auth/AuthScreen";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
-import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
-import wishlist from "./views/screens/Wishlist/wishlist";
-import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
-import AdminMembers from "./views/screens/Members/AdminMember";
+import Payments from "./views/screens/Admin/Payments";
+import PageNotFound from "./views/screens/PageNotFound";
 import History from "./views/screens/History/History";
-import AdminReport from "./views/screens/AdminReport/AdminReport";
+import Report from "./views/screens/Admin/Report";
+import Wishlist from "./views/screens/Wishlist/wishlist";
+
 const cookieObj = new Cookie();
 
 class App extends React.Component {
   componentDidMount() {
-    setTimeout(() => {
-      let cookieResult = cookieObj.get("authData", { path: "/" });
-      if (cookieResult) {
-        this.props.keepLogin(cookieResult);
-      } else {
-        this.props.cookieChecker();
-      }
-    }, 1500);
+    let cookieResult = cookieObj.get("authData", { path: "/" });
+    if (cookieResult) {
+      this.props.keepLogin(cookieResult);
+    } else {
+      this.props.cookieChecker();
+    }
   }
+
   renderAdminRoutes = () => {
     if (this.props.user.role === "admin") {
       return (
         <>
           <Route exact path="/admin/dashboard" component={AdminDashboard} />
-          <Route exact path="/admin/payment" component={AdminPayment} />
-          <Route exact path="/admin/members" component={AdminMembers} />
-          <Route exact path="/admin/pageReport" component={AdminReport} />
+          <Route exact path="/admin/payments" component={Payments} />
+          <Route exact path="/admin/report" component={Report} />
         </>
       );
     }
   };
+
+  renderProtectedRoutes = () => {
+    if (this.props.user.id) {
+      return (
+        <>
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/history" component={History} />
+          <Route exact path="/wishlist" component={Wishlist} />
+        </>
+      );
+    }
+  };
+
   render() {
     if (this.props.user.cookieChecked) {
       return (
@@ -57,12 +68,9 @@ class App extends React.Component {
               path="/product/:productId"
               component={ProductDetails}
             />
-            <Route exact path="/cart" component={Cart} />
             {this.renderAdminRoutes()}
-            <Route exact path="/wishlist" component={wishlist} />
-            <Route exact path="/history" component={History} />
-
-            <Route exact path="/*" component={PageNotFound} />
+            {this.renderProtectedRoutes()}
+            <Route path="*" component={PageNotFound} />
           </Switch>
           <div style={{ height: "120px" }} />
         </>
@@ -85,3 +93,28 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
+
+/**
+ * PR
+ * 1. Add to cart, jika barang double, qty yg akan bertambah
+ * 2. Di Home, ketika click PHONE/LAPTOP/TAB/DESKTOP
+ * 3. Di navbar, ketika ketik, secara otomatis filter products
+ * 4. Di cart, buat button checkout, serta dengan proses checkout
+ * 5. Ketika confirm checkout, lakukan POST request ke db.json ke transaction
+ *    -> lalu cart harus kosong
+ *
+ * TRANSACTIONS
+ * userId
+ * total price
+ * status -> "pending"
+ * tanggal belanja
+ * tanggal selesai -> ""
+ *
+ * TRANSACTION_DETAILS
+ * transactionId
+ * productId
+ * price
+ * quantity
+ * totalPrice (price * quantity)
+ *
+ */

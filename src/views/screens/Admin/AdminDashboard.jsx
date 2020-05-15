@@ -1,278 +1,14 @@
 import React from "react";
-import { Table } from "reactstrap";
+import "./AdminDashboard.css";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import Axios from "axios";
+
 import { API_URL } from "../../../constants/API";
+
 import ButtonUI from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
+
 import swal from "sweetalert";
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import "./AdminDashboard.css";
-// class AdminDashboard extends React.Component {
-//   state = {
-//     productList: [],
-//     createForm: {
-//       productName: "",
-//       price: "",
-//       category: "Phone",
-//       image: "",
-//       desc: "",
-//     },
-//     editForm: {
-//       id: 0,
-//       productName: "",
-//       price: 0,
-//       category: "Phone",
-//       image: "",
-//       desc: "",
-//     },
-//   };
-
-//   getProductList = () => {
-//     Axios.get(`${API_URL}/products`)
-//       .then((res) => {
-//         this.setState({ productList: res.data });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-
-//   renderProductList = () => {
-//     return this.state.productList.map((val, idx) => {
-//       const { id, productName, price, category, image, desc } = val;
-//       return (
-//         <tr>
-//           <td> {id} </td>
-//           <td> {productName} </td>
-//           <td> {price} </td>
-//           <td> {category} </td>
-//           <td>
-//             {" "}
-//             <img
-//               src={image}
-//               alt=""
-//               style={{ height: "100px", objectFit: "contain" }}
-//             />{" "}
-//           </td>
-//           <td> {desc} </td>
-//           <td>
-//             <ButtonUI type="contained" onClick={() => this.editBtnHandler(idx)}>
-//               Edit
-//             </ButtonUI>
-//           </td>
-//           <td>
-//             <ButtonUI
-//               type="outlined"
-//               onClick={() => this.deleteProductHandler(val.id)}
-//             >
-//               Delete
-//             </ButtonUI>
-//           </td>
-//         </tr>
-//       );
-//     });
-//   };
-
-//   inputHandler = (e, field, form) => {
-//     const { value } = e.target;
-//     this.setState({
-//       [form]: {
-//         ...this.state[form],
-//         [field]: value,
-//       },
-//     });
-//   };
-
-//   createProductHandler = () => {
-//     Axios.post(`${API_URL}/products`, this.state.createForm)
-//       .then((res) => {
-//         swal("Success", "Your items has been added to the list", "success");
-
-//         this.setState({
-//           createForm: {
-//             productName: "",
-//             price: "",
-//             category: "Phone",
-//             image: "",
-//             desc: "",
-//           },
-//         });
-//         this.getProductList();
-//       })
-//       .catch((err) => {
-//         swal("Error", "Your items has not been added to the list", "error");
-//       });
-//   };
-
-//   editBtnHandler = (idx) => {
-//     this.setState({
-//       editForm: {
-//         ...this.state.productList[idx],
-//       },
-//     });
-//   };
-
-//   editProductHandler = () => {
-//     Axios.put(
-//       `${API_URL}/products/${this.state.editForm.id}`,
-//       this.state.editForm
-//     )
-//       .then((res) => {
-//         swal("Success", "Your items has been added to the list", "success");
-//         this.getProductList();
-//       })
-//       .catch((err) => {
-//         swal("Error", "Your items has not been added to the list", "error");
-//         console.log(err);
-//       });
-//   };
-
-//   componentDidMount() {
-//     this.getProductList();
-//   }
-
-//   deleteProductHandler = (id) => {
-//     Axios.delete(`${API_URL}/products/${id}`)
-//       .then((res) => {
-//         swal("success deleted", "Item has been Deleted ", "success");
-//         this.getProductList();
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-
-//   render() {
-//     return (
-//       <div className="container py-4">
-//         <Table>
-//           <thead className="text-center">
-//             <th>ID</th>
-//             <th>Product Name</th>
-//             <th>Product Price</th>
-//             <th>Category</th>
-//             <th>Image</th>
-//             <th>Description</th>
-//             <th colSpan={2}>Action</th>
-//           </thead>
-//           <tbody>{this.renderProductList()}</tbody>
-//           <tfoot>
-//             <tr>
-//               <td colSpan={2}>
-//                 <TextField
-//                   value={this.state.createForm.productName}
-//                   onChange={(e) =>
-//                     this.inputHandler(e, "productName", "createForm")
-//                   }
-//                   placeholder="Name"
-//                 />
-//               </td>
-//               <td>
-//                 <TextField
-//                   value={this.state.createForm.price}
-//                   onChange={(e) => this.inputHandler(e, "price", "createForm")}
-//                   placeholder="Price"
-//                 />
-//               </td>
-//               <td colSpan={2}>
-//                 <select
-//                   value={this.state.createForm.category}
-//                   onChange={(e) =>
-//                     this.inputHandler(e, "category", "createForm")
-//                   }
-//                   className="form-control"
-//                 >
-//                   <option value="Phone">Phone</option>
-//                   <option value="Laptop">Laptop</option>
-//                   <option value="Tab">Tab</option>
-//                   <option value="Desktop">Desktop</option>
-//                 </select>
-//               </td>
-//               <td>
-//                 <TextField
-//                   value={this.state.createForm.image}
-//                   onChange={(e) => this.inputHandler(e, "image", "createForm")}
-//                   placeholder="Image"
-//                 />
-//               </td>
-//               <td colSpan={2}>
-//                 <TextField
-//                   value={this.state.createForm.desc}
-//                   onChange={(e) => this.inputHandler(e, "desc", "createForm")}
-//                   placeholder="Description"
-//                 />
-//               </td>
-//             </tr>
-//             <tr>
-//               <td colSpan={7}></td>
-//               <td colSpan={1}>
-//                 <ButtonUI onClick={this.createProductHandler} type="contained">
-//                   Create
-//                 </ButtonUI>
-//               </td>
-//             </tr>
-//             <tr>
-//               <td colSpan={2}>
-//                 <TextField
-//                   value={this.state.editForm.productName}
-//                   onChange={(e) =>
-//                     this.inputHandler(e, "productName", "editForm")
-//                   }
-//                   placeholder="Name"
-//                 />
-//               </td>
-//               <td>
-//                 <TextField
-//                   value={this.state.editForm.price}
-//                   onChange={(e) => this.inputHandler(e, "price", "editForm")}
-//                   placeholder="Price"
-//                 />
-//               </td>
-//               <td colSpan={2}>
-//                 <select
-//                   value={this.state.editForm.category}
-//                   onChange={(e) => this.inputHandler(e, "category", "editForm")}
-//                   className="form-control"
-//                 >
-//                   <option value="Phone">Phone</option>
-//                   <option value="Laptop">Laptop</option>
-//                   <option value="Tab">Tab</option>
-//                   <option value="Desktop">Desktop</option>
-//                 </select>
-//               </td>
-//               <td>
-//                 <TextField
-//                   value={this.state.editForm.image}
-//                   onChange={(e) => this.inputHandler(e, "image", "editForm")}
-//                   placeholder="Image"
-//                 />
-//               </td>
-//               <td colSpan={2}>
-//                 <TextField
-//                   value={this.state.editForm.desc}
-//                   onChange={(e) => this.inputHandler(e, "desc", "editForm")}
-//                   placeholder="Description"
-//                 />
-//               </td>
-//             </tr>
-//             <tr>
-//               <td colSpan={7}></td>
-//               <td colSpan={1}>
-//                 <ButtonUI onClick={this.editProductHandler} type="contained">
-//                   Save
-//                 </ButtonUI>
-//               </td>
-//             </tr>
-//           </tfoot>
-//         </Table>
-//       </div>
-//     );
-//   }
-// }
-
-// export default AdminDashboard;
-
-// PUNYA ABANGNYA
 
 class AdminDashboard extends React.Component {
   state = {
@@ -305,16 +41,6 @@ class AdminDashboard extends React.Component {
         console.log(err);
       });
   };
-  deleteProductHandler = (id) => {
-    Axios.delete(`${API_URL}/products/${id}`)
-      .then((res) => {
-        swal("success deleted", "Item has been Deleted ", "success");
-        this.getProductList();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   renderProductList = () => {
     return this.state.productList.map((val, idx) => {
@@ -336,7 +62,6 @@ class AdminDashboard extends React.Component {
               }
             }}
           >
-            <td>{idx + 1}</td>
             <td> {id} </td>
             <td> {productName} </td>
             <td>
@@ -355,11 +80,7 @@ class AdminDashboard extends React.Component {
             <td className="" colSpan={3}>
               <div className="d-flex justify-content-around align-items-center">
                 <div className="d-flex">
-                  <img
-                    src={image}
-                    alt=""
-                    style={{ height: "100px", objectFit: "contain" }}
-                  />
+                  <img src={image} alt="" />
                   <div className="d-flex flex-column ml-4 justify-content-center">
                     <h5>{productName}</h5>
                     <h6 className="mt-2">
@@ -389,11 +110,7 @@ class AdminDashboard extends React.Component {
                   >
                     Edit
                   </ButtonUI>
-                  <ButtonUI
-                    onClick={(_) => this.deleteProductHandler(id)}
-                    className="mt-3"
-                    type="textual"
-                  >
+                  <ButtonUI className="mt-3" type="textual">
                     Delete
                   </ButtonUI>
                 </div>
@@ -455,12 +172,15 @@ class AdminDashboard extends React.Component {
         console.log(err);
       });
   };
+
   toggleModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
+
   componentDidMount() {
     this.getProductList();
   }
+
   render() {
     return (
       <div className="container py-4">
@@ -471,7 +191,6 @@ class AdminDashboard extends React.Component {
           <table className="dashboard-table">
             <thead>
               <tr>
-                <th>No</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price</th>

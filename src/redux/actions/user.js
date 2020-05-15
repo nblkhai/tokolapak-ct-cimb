@@ -27,7 +27,20 @@ export const loginHandler = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
-          alert("Login Berhasil!");
+          Axios.get(`${API_URL}/carts`, {
+            params: {
+              userId: res.data[0].id,
+            },
+          })
+            .then((res) => {
+              dispatch({
+                type: "FILL_CART",
+                payload: res.data.length,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           dispatch({
             type: ON_LOGIN_FAIL,
@@ -54,6 +67,20 @@ export const userKeepLogin = (userData) => {
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0],
           });
+          Axios.get(`${API_URL}/carts`, {
+            params: {
+              userId: res.data[0].id,
+            },
+          })
+            .then((res) => {
+              dispatch({
+                type: "FILL_CART",
+                payload: res.data.length,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           dispatch({
             type: ON_LOGIN_FAIL,
@@ -68,7 +95,7 @@ export const userKeepLogin = (userData) => {
 };
 
 export const logoutHandler = () => {
-  cookieObj.remove("authData");
+  cookieObj.remove("authData", { path: "/" });
   return {
     type: ON_LOGOUT_SUCCESS,
   };
@@ -90,12 +117,25 @@ export const registerHandler = (userData) => {
         } else {
           Axios.post(`${API_URL}/users`, { ...userData, role: "user" })
             .then((res) => {
-              console.log(res.data);
               dispatch({
                 type: ON_LOGIN_SUCCESS,
                 payload: res.data,
               });
-              alert("Terima Kasih sudah Register!");
+
+              Axios.get(`${API_URL}/carts`, {
+                params: {
+                  userId: res.data.id,
+                },
+              })
+                .then((res) => {
+                  dispatch({
+                    type: "FILL_CART",
+                    payload: res.data.length,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => {
               console.log(err);
@@ -114,29 +154,17 @@ export const cookieChecker = () => {
   };
 };
 
-export const searchProduct = (searchInput) => {
-  return {
-    type: "ON_SEARCH_PRODUCT",
-    payload: searchInput,
-  };
-};
-
-export const cartQuantity = (userId) => {
+export const fillCart = (userId) => {
   return (dispatch) => {
-    Axios.get(`${API_URL}/cart`, {
+    Axios.get(`${API_URL}/carts`, {
       params: {
         userId,
       },
     })
       .then((res) => {
-        console.log(res.data);
-        let cartQty = 0;
-        res.data.map((value) => {
-          return (cartQty += value.qty);
-        });
         dispatch({
-          type: "CART_QTY",
-          payload: cartQty,
+          type: "FILL_CART",
+          payload: res.data.length,
         });
       })
       .catch((err) => {

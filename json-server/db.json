@@ -1,11 +1,8 @@
 {
   "users": [
     {
-      "username": "bella",
-      "password": "bella",
-      "email": "bella@mail.com",
-      "fullName": "bella",
-      "role": "user",
+      "username": "andi",
+      "password": "password",
       "id": 1
     },
     {
@@ -25,671 +22,217 @@
       "id": 3
     },
     {
-      "username": "elmo",
-      "fullName": "elmoo",
-      "password": "aaa",
-      "email": "elmo@mail.com",
-      "role": "admin",
-      "id": 4
-    },
-    {
       "username": "admin",
-      "fullName": "admin",
-      "password": "123",
+      "fullName": "Super Admin",
+      "password": "password",
       "email": "admin@mail.com",
       "role": "admin",
+      "id": 4
+    }
+  ],
+  "products": [
+    {
+      "productName": "iPhone 7 +",
+      "price": 5000000,
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
+      "desc": "HP Terbaikk loh",
+      "id": 1
+    },
+    {
+      "productName": "iPad Pro 3",
+      "price": 15000000,
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
+      "desc": "HP Terbaikk loh",
+      "id": 2
+    },
+    {
+      "productName": "Macbook Pro",
+      "price": "30000000",
+      "category": "Laptop",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
+      "desc": "HP Terbaikk loh",
+      "id": 3
+    },
+    {
+      "name": "iMac (2019)",
+      "price": "23000000",
+      "category": "Desktop",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/m/imac-27-cto-hero-201903_1_1.jpeg",
+      "desc": "Desktop khusus para sultan gan.",
+      "id": 4,
+      "productName": "iMac (2019)"
+    },
+    {
+      "productName": "iPhone 11 Pro Max",
+      "price": "24000000",
+      "category": "",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "HP Kamera boba",
       "id": 5
     },
     {
-      "username": "aldy",
-      "fullName": "aldy aulia",
-      "password": "123",
-      "email": "aldy@mail.com",
-      "role": "user",
+      "productName": "iPhone 11 Max abis",
+      "price": "123123123",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "asdasdasdsd",
+      "id": 6
+    },
+    {
+      "productName": "iPhone Max bet",
+      "price": "3132312",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "asdasdasdadadad",
+      "id": 7
+    },
+    {
+      "productName": "iPad 7 ",
+      "price": "6000000",
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-wifi-select-space-201909_geo_us.png",
+      "desc": "iPad baru",
+      "id": 8
+    },
+    {
+      "productName": "OPPO Find X2 Pro",
+      "price": "5300000",
+      "category": "Phone",
+      "image": "https://image.oppo.com/content/dam/oppo/id/mkt/header/Compass-Pro%20orange-EN.png",
+      "desc": "Keluaran terbaru dari OPPO guys, STOCK TERBATAS!!",
+      "id": 9
+    }
+  ],
+  "carts": [
+    {
+      "userId": 2,
+      "productId": 2,
+      "quantity": 1,
+      "id": 1
+    },
+    {
+      "userId": 2,
+      "productId": 2,
+      "quantity": 1,
+      "id": 2
+    }
+  ],
+  "transactions": [
+    {
+      "userId": 4,
+      "totalPrice": 40100000,
+      "status": "completed",
+      "checkoutDate": 1588598503706,
+      "completedDate": 1588598503706,
+      "id": 1
+    },
+    {
+      "userId": 4,
+      "totalPrice": 40100000,
+      "status": "completed",
+      "checkoutDate": 1588598760781,
+      "completedDate": 1588598503706,
+      "id": 2
+    },
+    {
+      "userId": 4,
+      "totalPrice": 25100000,
+      "status": "pending",
+      "checkoutDate": 1588598935533,
+      "completedDate": 1588598503706,
+      "id": 3
+    },
+    {
+      "userId": 4,
+      "totalPrice": 10100000,
+      "status": "completed",
+      "checkoutDate": 1588599180422,
+      "completedDate": 1588598503706,
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "totalPrice": 52100000,
+      "status": "completed",
+      "checkoutDate": 1588733329780,
+      "completedDate": 1588736310197,
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "totalPrice": 55050000,
+      "status": "completed",
+      "checkoutDate": 1588734379877,
+      "completedDate": 1588598503706,
       "id": 6
     }
   ],
   "transactionDetails": [
     {
+      "transactionId": 2,
       "productId": 3,
-      "transactionsId": 6,
       "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
+      "quantity": 2,
+      "totalPrice": 40000000,
       "id": 1
     },
     {
-      "productId": 3,
-      "transactionsId": 7,
-      "price": 20000000,
-      "totalPrice": 60000000,
-      "quantity": 3,
+      "transactionId": 3,
+      "productId": 1,
+      "price": 5000000,
+      "quantity": 2,
+      "totalPrice": 10000000,
       "id": 2
     },
     {
-      "productId": 5,
-      "transactionsId": 7,
-      "price": "30000000",
-      "totalPrice": 120000000,
-      "quantity": 4,
+      "transactionId": 3,
+      "productId": 2,
+      "price": 15000000,
+      "quantity": 1,
+      "totalPrice": 15000000,
       "id": 3
     },
     {
-      "productId": 3,
-      "transactionsId": 8,
-      "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
+      "transactionId": 4,
+      "productId": 1,
+      "price": 5000000,
+      "quantity": 2,
+      "totalPrice": 10000000,
       "id": 4
     },
     {
-      "productId": 3,
-      "transactionsId": 10,
-      "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
+      "transactionId": 5,
+      "productId": 4,
+      "price": "23000000",
+      "quantity": 2,
+      "totalPrice": 46000000,
       "id": 5
     },
     {
-      "productId": 5,
-      "transactionsId": 10,
-      "price": "30000000",
-      "totalPrice": 30000000,
+      "transactionId": 5,
+      "productId": 8,
+      "price": "6000000",
       "quantity": 1,
+      "totalPrice": 6000000,
       "id": 6
     },
     {
+      "transactionId": 6,
       "productId": 3,
-      "transactionsId": 11,
       "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
+      "quantity": 2,
+      "totalPrice": 40000000,
       "id": 7
     },
     {
-      "productId": 5,
-      "transactionsId": 11,
-      "price": "30000000",
-      "totalPrice": 30000000,
+      "transactionId": 6,
+      "productId": 2,
+      "price": 15000000,
       "quantity": 1,
+      "totalPrice": 15000000,
       "id": 8
-    },
-    {
-      "productId": 6,
-      "transactionsId": 12,
-      "price": "20000000",
-      "totalPrice": 20000000,
-      "quantity": 1,
-      "id": 9
-    },
-    {
-      "productId": 5,
-      "transactionsId": 12,
-      "price": "30000000",
-      "totalPrice": 30000000,
-      "quantity": 1,
-      "id": 10
-    },
-    {
-      "productId": 5,
-      "price": "30000000",
-      "totalPrice": 30000000,
-      "quantity": 1,
-      "id": 11
-    },
-    {
-      "productId": 3,
-      "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
-      "id": 12
-    },
-    {
-      "productId": 3,
-      "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
-      "id": 13
-    },
-    {
-      "productId": 3,
-      "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
-      "id": 14
-    },
-    {
-      "productId": 5,
-      "transactionsId": 20,
-      "price": "30000000",
-      "totalPrice": 30000000,
-      "quantity": 1,
-      "id": 15
-    },
-    {
-      "productId": 7,
-      "transactionsId": 21,
-      "price": "15000000",
-      "totalPrice": 15000000,
-      "quantity": 1,
-      "id": 16
-    },
-    {
-      "productId": 5,
-      "transactionsId": 22,
-      "price": "30000000",
-      "totalPrice": 30000000,
-      "quantity": 1,
-      "id": 17
-    },
-    {
-      "productId": 7,
-      "transactionsId": 23,
-      "price": "15000000",
-      "totalPrice": 15000000,
-      "quantity": 1,
-      "id": 18
-    },
-    {
-      "productId": 3,
-      "transactionsId": 24,
-      "price": 20000000,
-      "totalPrice": 20000000,
-      "quantity": 1,
-      "status": "pending",
-      "id": 19
-    },
-    {
-      "productId": 6,
-      "transactionsId": 25,
-      "price": "20000000",
-      "totalPrice": 20000000,
-      "quantity": 1,
-      "status": "pending",
-      "id": 20
-    },
-    {
-      "productId": 7,
-      "transactionsId": 26,
-      "price": "15000000",
-      "totalPrice": 15000000,
-      "quantity": 1,
-      "status": "pending",
-      "id": 21
-    }
-  ],
-  "products": [
-    {
-      "productName": "Macbook Pro",
-      "price": 20000000,
-      "category": "Laptop",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
-      "desc": "Laptop Terbaikk loh",
-      "id": 3
-    },
-    {
-      "productName": "iMac",
-      "price": "30000000",
-      "category": "Desktop",
-      "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
-      "desc": "iMac Mahal Banget YaAllah",
-      "id": 5
-    },
-    {
-      "productName": "iPhone 11 Pro",
-      "price": "20000000",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/wysiwyg/iPhone/main-lp-iphone-11-pro.png",
-      "desc": "Iphone 11 Pro Jual Ginjal",
-      "id": 6
-    },
-    {
-      "productName": "Samsung Galaxy S10",
-      "price": "15000000",
-      "category": "Phone",
-      "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
-      "desc": "Hp Samsung Mahal",
-      "id": 7
-    }
-  ],
-  "cart": [
-    {
-      "userId": 1,
-      "productId": 6,
-      "quantity": 1,
-      "id": 1
-    }
-  ],
-  "transactions": [
-    {
-      "userId": 1,
-      "totalPrice": 1000000,
-      "status": "SUDAH DIBAYAR",
-      "transactionDate": "22-03-2020",
-      "dateDone": "5/4/2020",
-      "id": 1
-    },
-    {
-      "userId": 1,
-      "totalPrice": 23000000,
-      "id": 2,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/5/2020"
-    },
-    {
-      "userId": 1,
-      "totalPrice": 15000000,
-      "id": 3,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/4/2020"
-    },
-    {
-      "userId": 1,
-      "totalPrice": 61000000,
-      "id": 4,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/4/2020"
-    },
-    {
-      "userId": 2,
-      "status": "SUDAH DIBAYAR",
-      "id": 5,
-      "dateDone": "5/4/2020"
-    },
-    {
-      "userId": 2,
-      "status": "SUDAH DIBAYAR",
-      "id": 6,
-      "dateDone": "5/4/2020"
-    },
-    {
-      "userId": 2,
-      "status": "SUDAH DIBAYAR",
-      "id": 7,
-      "dateDone": "5/5/2020"
-    },
-    {
-      "userId": 2,
-      "items": [
-        {
-          "userId": 2,
-          "productId": 3,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "Macbook Pro",
-            "price": 20000000,
-            "category": "Laptop",
-            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
-            "desc": "Laptop Terbaikk loh",
-            "id": 3
-          }
-        }
-      ],
-      "totalPrice": 20000000,
-      "transactionDate": "5/4/2020",
-      "id": 8,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/4/2020"
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 6,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "iPhone 11 Pro",
-            "price": "20000000",
-            "category": "Phone",
-            "image": "https://ibox.co.id/media/wysiwyg/iPhone/main-lp-iphone-11-pro.png",
-            "desc": "Iphone 11 Pro Jual Ginjal",
-            "id": 6
-          }
-        },
-        {
-          "userId": 1,
-          "productId": 5,
-          "quantity": 1,
-          "id": 2,
-          "product": {
-            "productName": "iMac",
-            "price": "30000000",
-            "category": "Desktop",
-            "image": "data:image/jpeg;base64,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",
-            "desc": "iMac Mahal Banget YaAllah",
-            "id": 5
-          }
-        }
-      ],
-      "totalPrice": 50000000,
-      "transactionDate": "5/5/2020",
-      "id": 9,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/5/2020"
-    },
-    {
-      "userId": 1,
-      "totalPrice": 50000000,
-      "transactionDate": "5/5/2020",
-      "id": 10
-    },
-    {
-      "userId": 6,
-      "items": [
-        {
-          "userId": 6,
-          "productId": 3,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "Macbook Pro",
-            "price": 20000000,
-            "category": "Laptop",
-            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
-            "desc": "Laptop Terbaikk loh",
-            "id": 3
-          }
-        },
-        {
-          "userId": 6,
-          "productId": 5,
-          "quantity": 1,
-          "id": 2,
-          "product": {
-            "productName": "iMac",
-            "price": "30000000",
-            "category": "Desktop",
-            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
-            "desc": "iMac Mahal Banget YaAllah",
-            "id": 5
-          }
-        }
-      ],
-      "totalPrice": 50000000,
-      "transactionDate": "5/5/2020",
-      "id": 11,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/5/2020"
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 6,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "iPhone 11 Pro",
-            "price": "20000000",
-            "category": "Phone",
-            "image": "https://ibox.co.id/media/wysiwyg/iPhone/main-lp-iphone-11-pro.png",
-            "desc": "Iphone 11 Pro Jual Ginjal",
-            "id": 6
-          }
-        },
-        {
-          "userId": 1,
-          "productId": 5,
-          "quantity": 1,
-          "id": 2,
-          "product": {
-            "productName": "iMac",
-            "price": "30000000",
-            "category": "Desktop",
-            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
-            "desc": "iMac Mahal Banget YaAllah",
-            "id": 5
-          }
-        }
-      ],
-      "totalPrice": 50000000,
-      "transactionDate": "5/5/2020",
-      "id": 12
-    },
-    {
-      "userId": 3,
-      "items": [
-        {
-          "userId": 3,
-          "productId": 5,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "iMac",
-            "price": "30000000",
-            "category": "Desktop",
-            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
-            "desc": "iMac Mahal Banget YaAllah",
-            "id": 5
-          }
-        },
-        {
-          "userId": 3,
-          "productId": 3,
-          "quantity": 1,
-          "id": 2,
-          "product": {
-            "productName": "Macbook Pro",
-            "price": 20000000,
-            "category": "Laptop",
-            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
-            "desc": "Laptop Terbaikk loh",
-            "id": 3
-          }
-        }
-      ],
-      "totalPrice": 50000000,
-      "transactionDate": "5/5/2020",
-      "id": 13,
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/5/2020"
-    },
-    {
-      "userId": 1,
-      "totalPrice": 20000000,
-      "transactionDate": "5/5/2020",
-      "id": 14
-    },
-    {
-      "userId": 1,
-      "totalPrice": 20000000,
-      "transactionDate": "5/5/2020",
-      "status": "SUDAH DIBAYAR",
-      "dateDone": "5/5/2020",
-      "id": 15
-    },
-    {
-      "userId": 3,
-      "totalPrice": 30050000,
-      "status": "pending",
-      "id": 16
-    },
-    {
-      "userId": 3,
-      "totalPrice": 60000000,
-      "status": "SUDAH DIBAYAR",
-      "id": 17,
-      "dateDone": "5/5/2020"
-    },
-    {
-      "userId": 3,
-      "totalPrice": 20000000,
-      "status": "SUDAH DIBAYAR",
-      "id": 18,
-      "dateDone": "5/5/2020"
-    },
-    {
-      "id": 19
-    },
-    {
-      "id": 20
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 7,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "Samsung Galaxy S10",
-            "price": "15000000",
-            "category": "Phone",
-            "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
-            "desc": "Hp Samsung Mahal",
-            "id": 7
-          }
-        }
-      ],
-      "totalPrice": 15000000,
-      "transactionDate": "5/5/2020",
-      "id": 21
-    },
-    {
-      "userId": 6,
-      "items": [
-        {
-          "userId": 6,
-          "productId": 5,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "iMac",
-            "price": "30000000",
-            "category": "Desktop",
-            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
-            "desc": "iMac Mahal Banget YaAllah",
-            "id": 5
-          }
-        }
-      ],
-      "totalPrice": 30000000,
-      "transactionDate": "5/5/2020",
-      "id": 22
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 7,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "Samsung Galaxy S10",
-            "price": "15000000",
-            "category": "Phone",
-            "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
-            "desc": "Hp Samsung Mahal",
-            "id": 7
-          }
-        }
-      ],
-      "totalPrice": 15000000,
-      "transactionDate": "5/5/2020",
-      "id": 23
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 3,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "Macbook Pro",
-            "price": 20000000,
-            "category": "Laptop",
-            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
-            "desc": "Laptop Terbaikk loh",
-            "id": 3
-          }
-        }
-      ],
-      "totalPrice": 20000000,
-      "transactionDate": "5/5/2020",
-      "id": 24
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 6,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "iPhone 11 Pro",
-            "price": "20000000",
-            "category": "Phone",
-            "image": "https://ibox.co.id/media/wysiwyg/iPhone/main-lp-iphone-11-pro.png",
-            "desc": "Iphone 11 Pro Jual Ginjal",
-            "id": 6
-          }
-        }
-      ],
-      "totalPrice": 20000000,
-      "transactionDate": "5/5/2020",
-      "id": 25
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 7,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "Samsung Galaxy S10",
-            "price": "15000000",
-            "category": "Phone",
-            "image": "https://www.mytrendyphone.eu/images/Samsung-Galaxy-S10-Duos-128GB-Black-8801643682149-27022019-01-p.jpg",
-            "desc": "Hp Samsung Mahal",
-            "id": 7
-          }
-        }
-      ],
-      "totalPrice": 15000000,
-      "transactionDate": "5/5/2020",
-      "id": 26
-    },
-    {
-      "userId": 1,
-      "items": [
-        {
-          "userId": 1,
-          "productId": 5,
-          "quantity": 1,
-          "id": 1,
-          "product": {
-            "productName": "iMac",
-            "price": "30000000",
-            "category": "Desktop",
-            "image": "https://ibox.co.id/media/wysiwyg/Mac/imac-2019_07-min.png",
-            "desc": "iMac Mahal Banget YaAllah",
-            "id": 5
-          }
-        }
-      ],
-      "totalPrice": 30000000,
-      "transactionDate": "5/5/2020",
-      "id": 27
-    },
-    {
-      "productId": 5,
-      "transactionsId": 27,
-      "price": "30000000",
-      "totalPrice": 30000000,
-      "quantity": 1,
-      "status": "pending",
-      "id": 28
     }
   ],
   "wishlist": []

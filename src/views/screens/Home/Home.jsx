@@ -1,6 +1,8 @@
 import React from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,16 +12,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Home.css";
 
-import ProductCard from "../../components/Cards/ProductCard.tsx";
+import ProductCard from "../../components/Cards/ProductCard";
+
 import iPhoneX from "../../../assets/images/Showcase/iPhone-X.png";
 import iPhone8 from "../../../assets/images/Showcase/iPhone-8.png";
 import iPadPro from "../../../assets/images/Showcase/iPad-Pro.png";
 import ButtonUI from "../../components/Button/Button";
 import CarouselShowcaseItem from "./CarouselShowcaseItem.tsx";
 import Colors from "../../../constants/Colors";
-
 import { API_URL } from "../../../constants/API";
-import { connect } from "react-redux";
 import { cartQuantity } from "../../../redux/actions";
 
 const dummy = [
@@ -54,6 +55,7 @@ class Home extends React.Component {
     activeIndex: 0,
     animating: false,
     bestSellerData: [],
+    categoryFilter: "",
   };
 
   renderCarouselItems = () => {
@@ -155,42 +157,80 @@ class Home extends React.Component {
     this.props.cartQuantity(this.props.user.id);
   }
 
+  getBestSellerData = () => {
+    Axios.get(`${API_URL}/products`)
+      .then((res) => {
+        this.setState({ bestSellerData: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  renderProducts = () => {
+    return this.state.bestSellerData.map((val) => {
+      if (
+        val.productName
+          .toLowerCase()
+          .includes(this.props.search.searchValue.toLowerCase()) &&
+        val.category.toLowerCase().includes(this.state.categoryFilter)
+      ) {
+        return (
+          <Link
+            style={{ textDecoration: "none", color: "inherit" }}
+            to={`/product/${val.id}`}
+          >
+            <ProductCard
+              key={`bestseller-${val.id}`}
+              data={val}
+              className="m-2"
+            />
+          </Link>
+        );
+      }
+    });
+  };
+
+  componentDidMount() {
+    this.getBestSellerData();
+  }
+
   render() {
     return (
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
           <Link
-            onClick={() => this.getBestSellerProduct()}
             to="/"
             style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "" })}
           >
-            <h6 className="mx-4 font-weight-bold">PRODUCTS</h6>
+            <h6 className="mx-4 font-weight-bold">ALL CATEGORY</h6>
           </Link>
           <Link
-            onClick={() => this.getBestSellerProduct("Phone")}
             to="/"
             style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "phone" })}
           >
             <h6 className="mx-4 font-weight-bold">PHONE</h6>
           </Link>
           <Link
-            onClick={() => this.getBestSellerProduct("Laptop")}
             to="/"
             style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "laptop" })}
           >
             <h6 className="mx-4 font-weight-bold">LAPTOP</h6>
           </Link>
           <Link
-            onClick={() => this.getBestSellerProduct("Tab")}
             to="/"
             style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "tab" })}
           >
             <h6 className="mx-4 font-weight-bold">TAB</h6>
           </Link>
           <Link
-            onClick={() => this.getBestSellerProduct("Desktop")}
             to="/"
             style={{ color: "inherit" }}
+            onClick={() => this.setState({ categoryFilter: "desktop" })}
           >
             <h6 className="mx-4 font-weight-bold">DESKTOP</h6>
           </Link>
@@ -276,11 +316,8 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    search: state.search,
   };
 };
 
-const mapDispatchToProps = {
-  cartQuantity,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

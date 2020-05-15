@@ -9,17 +9,12 @@ import {
   DropdownToggle,
   DropdownMenu,
 } from "reactstrap";
-import Axios from "axios";
-import { API_URL } from "../../../constants/API";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
 import ButtonUI from "../Button/Button";
-import { logoutHandler, searchProduct } from "../../../redux/actions";
-
-import Cookie from "universal-cookie";
-const cookieObject = new Cookie();
+import { logoutHandler, navbarInputHandler } from "../../../redux/actions";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -30,11 +25,6 @@ class Navbar extends React.Component {
     searchBarIsFocused: false,
     searcBarInput: "",
     dropdownOpen: false,
-    qtyNumbers: 0,
-  };
-
-  inputHandler = (e, field) => {
-    this.setState({ [field]: e.target.value });
   };
 
   onFocus = () => {
@@ -45,7 +35,7 @@ class Navbar extends React.Component {
     this.setState({ searchBarIsFocused: false });
   };
 
-  onLogout = () => {
+  logoutBtnHandler = () => {
     this.props.onLogout();
     // this.forceUpdate();
   };
@@ -53,24 +43,6 @@ class Navbar extends React.Component {
   toggleDropdown = () => {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   };
-  // componentDidMount() {
-  //   this.qtyHandler();
-  // }
-  // qtyHandler = () => {
-  //   Axios.get(`${API_URL}/cart`, {
-  //     params: {
-  //       userId: this.props.user.id,
-  //       _expand: "product",
-  //     },
-  //   })
-  //     .then((res) => {
-  //       this.setState({ qtyNumbers: res.data.length });
-  //       console.log(this.state.qtyNumbers);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   render() {
     return (
@@ -85,6 +57,7 @@ class Navbar extends React.Component {
           className="px-5 d-flex flex-row justify-content-start"
         >
           <input
+            onChange={this.props.onChangeSearch}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             className={`search-bar ${
@@ -111,7 +84,6 @@ class Navbar extends React.Component {
                 <DropdownMenu className="mt-2">
                   {this.props.user.role == "admin" ? (
                     <>
-                      {""}
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
@@ -120,35 +92,18 @@ class Navbar extends React.Component {
                           Dashboard
                         </Link>
                       </DropdownItem>
+                      <DropdownItem>Members</DropdownItem>
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
-                          to="/admin/members"
-                        >
-                          Members
-                        </Link>
-                      </DropdownItem>
-                      <DropdownItem>
-                        {" "}
-                        <Link
-                          style={{ color: "inherit", textDecoration: "none" }}
-                          to="/admin/payment"
+                          to="/admin/payments"
                         >
                           Payments
-                        </Link>
-                      </DropdownItem>
-                      <DropdownItem>
-                        <Link
-                          style={{ color: "inherit", textDecoration: "none" }}
-                          to="/admin/pageReport"
-                        >
-                          Page Report
                         </Link>
                       </DropdownItem>
                     </>
                   ) : (
                     <>
-                      {""}
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
@@ -157,15 +112,8 @@ class Navbar extends React.Component {
                           Wishlist
                         </Link>
                       </DropdownItem>
-
                       <DropdownItem>
-                        {" "}
-                        <Link
-                          style={{ color: "inherit", textDecoration: "none" }}
-                          to="/history"
-                        >
-                          History
-                        </Link>
+                        <Link to="/history">History</Link>
                       </DropdownItem>
                     </>
                   )}
@@ -177,29 +125,23 @@ class Navbar extends React.Component {
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <FontAwesomeIcon
-                  className="mr-2 mt-2"
+                  className="mr-2"
                   icon={faShoppingCart}
                   style={{ fontSize: 24 }}
                 />
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    {this.state.qtyNumbers}
+                    {this.props.user.cartItems}
                   </small>
                 </CircleBg>
-                <Link
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  to="/auth"
-                >
-                  <ButtonUI
-                    className="ml-3"
-                    type="contained"
-                    value="Logout"
-                    onClick={this.onLogout}
-                  >
-                    Logout
-                  </ButtonUI>
-                </Link>
               </Link>
+              <ButtonUI
+                onClick={this.logoutBtnHandler}
+                className="ml-3"
+                type="textual"
+              >
+                Logout
+              </ButtonUI>
             </>
           ) : (
             <>
@@ -231,8 +173,10 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
+
 const mapDispatchToProps = {
   onLogout: logoutHandler,
-  searchProduct,
+  onChangeSearch: navbarInputHandler,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
