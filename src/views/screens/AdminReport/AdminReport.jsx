@@ -1,89 +1,132 @@
-import React from "react";
-import { Table, Alert } from "reactstrap";
+import React, { Component } from "react";
+import "./AdminReport.css";
 import Axios from "axios";
-import { connect } from "react-redux";
 import { API_URL } from "../../../constants/API";
-import ButtonUI from "../../components/Button/Button";
-import swal from "sweetalert";
+import { Table } from "reactstrap";
 
-class AdminReport extends React.Component {
+class AdminReport extends Component {
   state = {
-    userCount: 0,
-    productCount: 0,
-    dataList: [],
-    usernameList: [],
-    productList: [],
+    transactionList: [],
+    product: [],
+    listUser: [],
   };
+
   componentDidMount() {
-    this.getData();
+    this.getReportDataUser();
+    this.getReportDataProduct();
   }
 
-  // ini untuk ngeGetData untuk menampilkan semua dataList
-  getData = () => {
-    Axios.get(`${API_URL}/transactions`, {
+  getReportDataUser = () => {
+    Axios.get(`${API_URL}/users`, {
       params: {
-        status: "SUDAH DIBAYAR",
-        _embed: "transactionDetails",
+        // userId,
+        role: "user",
+        _embed: "transactions",
       },
-    }).then((res) => {
-      console.log(res.data);
-      this.setState({ dataList: res.data });
-      Axios.get(`${API_URL}/users`)
-        .then((res) => {
-          this.setState({ usernameList: res.data });
-        })
-        .catch((err) => {
-          console.log(err);
+    })
+      .then((res) => {
+        this.setState({ listUser: res.data });
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getReportDataProduct = () => {
+    Axios.get(`${API_URL}/products`, {
+      params: {
+        _embed: "transactions",
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ product: res.data });
+        this.state.product.map((val) => {
+          Axios.get(`${API_URL}/transactions`, {
+            params: {
+              // _embed: "transactionsDetails"
+            },
+          });
         });
-      Axios.get(`${API_URL}/products`)
-        .then((res) => {
-          this.setState({ productList: res.data });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  renderReportUser = () => {
+    const { listUser } = this.state;
+    return listUser.map((val) => {
+      let totalShopping = 0;
+      return (
+        <tr className="text-center">
+          <td>{val.id}</td>
+          <td>{val.fullName}</td>
+          <td>
+            {val.transactions.map((value) => {
+              if (value.userId == val.id) {
+                totalShopping = totalShopping + parseInt(value.grandTotalPrice);
+              } else {
+                totalShopping = 0;
+              }
+            })}
+            {totalShopping}
+          </td>
+        </tr>
+      );
     });
   };
 
-  // Ini buat nampilin userData diListnya
-  showDataUser = () => {
-    return this.state.usernameList.map((val, idx) => {
-      let totalBelanja = 0;
-      if (val.role == "user") {
-        this.state.dataList.map((val) => {
-          if (val.username == val.username) {
-            totalBelanja += val.totalPrice;
-          }
-        });
-        return (
-          <>
-            <tr>
-              <td>{idx + 1}</td>
-              <td>{val.username}</td>
-              <td>{totalBelanja}</td>
-            </tr>
-          </>
-        );
-      }
+  renderReportProduct = () => {
+    const { product } = this.state;
+    return product.map((val) => {
+      return (
+        <tr className="text-center">
+          <td>{val.id}</td>
+          <td>{val.productName}</td>
+          <td></td>
+        </tr>
+      );
     });
   };
+
   render() {
     return (
-      <div>
-        <h1>Data User</h1>
-        <Table>
-          <thead>
-            <tr>
-              <td>no</td>
-              <td>Username</td>
-              <td>Jumlah Belanja</td>
-            </tr>
-          </thead>
-          <tbody>{this.showDataUser()}</tbody>
-        </Table>
-        <br />
+      <div className="container py-4">
+        <div className="dashboard">
+          <caption className="p-3">
+            <h2>User Report</h2>
+          </caption>
+          <table className="dashboard-table">
+            <thead>
+              <tr className="text-center">
+                <th>No.</th>
+                <th>Fullname</th>
+                <th>Transaction</th>
+              </tr>
+            </thead>
+            <tbody>{this.renderReportUser()}</tbody>
+          </table>
+          <br />
+          <br />
+          <caption className="p-3">
+            <h2>Product Report</h2>
+          </caption>
+          <table className="dashboard-table">
+            <thead>
+              <tr className="text-center">
+                <th>No.</th>
+                <th>Nama Product</th>
+                <th>Jumlah</th>
+              </tr>
+            </thead>
+            <tbody>{this.renderReportProduct()}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
 }
+
 export default AdminReport;

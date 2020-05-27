@@ -1,68 +1,83 @@
 import React from "react";
+import "./AdminMembers.css";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
-import swal from "sweetalert";
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import TextField from "../../components/TextField/TextField";
+import swal from "sweetalert";
+
 class AdminMembers extends React.Component {
   state = {
-    memberList: [],
+    userList: [],
     editForm: {
       id: 0,
-      productName: "",
-      price: 0,
+      username: "",
+      fullName: "",
+      email: "",
       role: "",
-      image: "",
-      desc: "",
     },
+    activeUsers: [],
     modalOpen: false,
   };
-  componentDidMount() {
-    this.getMemberList();
-  }
-  getMemberList = () => {
+
+  getUserList = () => {
     Axios.get(`${API_URL}/users`)
       .then((res) => {
-        this.setState({ memberList: res.data });
-        console.log(res.data);
+        this.setState({ userList: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  deleteMemberList = (id) => {
-    Axios.delete(`${API_URL}/users/${id}`)
-      .then((res) => {
-        swal("success deleted", "Item has been Deleted ", "success");
-        this.getMemberList();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  editBtnHandler = (idx) => {
-    this.setState({
-      editForm: {
-        ...this.state.memberList[idx],
-      },
-      modalOpen: true,
+
+  renderUserList = () => {
+    return this.state.userList.map((val, idx) => {
+      const { id, username, fullName, password, email, role } = val;
+      return (
+        <>
+          <tr
+            onClick={() => {
+              if (this.state.activeUsers.includes(idx)) {
+                this.setState({
+                  activeUsers: [
+                    ...this.state.activeUsers.filter((item) => item !== idx),
+                  ],
+                });
+              } else {
+                this.setState({
+                  activeUsers: [...this.state.activeUsers, idx],
+                });
+              }
+            }}
+          >
+            <td> {id} </td>
+            <td> {role} </td>
+            <td> {username} </td>
+            <td> {fullName}</td>
+            <td> {email}</td>
+            <td>
+              <ButtonUI
+                onClick={() => this.editBtnHandler(idx)}
+                className="w-100"
+                type="contained"
+              >
+                Edit
+              </ButtonUI>
+            </td>
+            <td>
+              <ButtonUI
+                onClick={() => this.deleteHandler(idx)}
+                className="w-80"
+                type="outlined"
+              >
+                Delete
+              </ButtonUI>
+            </td>
+          </tr>
+        </>
+      );
     });
-  };
-  editMemberHandler = () => {
-    Axios.put(`${API_URL}/users/${this.state.editForm.id}`, this.state.editForm)
-      .then((res) => {
-        swal("Success!", "Your item has been edited", "success");
-        this.setState({ modalOpen: false });
-        this.getMemberList();
-      })
-      .catch((err) => {
-        swal("Error!", "Your item could not be edited", "error");
-        console.log(err);
-      });
-  };
-  toggleModal = () => {
-    this.setState({ modalOpen: !this.state.modalOpen });
   };
   inputHandler = (e, field, form) => {
     let { value } = e.target;
@@ -73,134 +88,129 @@ class AdminMembers extends React.Component {
       },
     });
   };
-  renderMemberList = () => {
-    console.log(this.state.memberList);
-    return this.state.memberList.map((val, idx) => {
-      const { id, username, fullName, email } = val;
-      return (
-        <>
-          <tr>
-            <td>{idx + 1}</td>
-            <td> {id} </td>
-            <td> {username} </td>
-            <td>{fullName}</td>
-            <td>{email}</td>
-            <td>
-              <ButtonUI
-                onClick={(_) => this.editBtnHandler(idx)}
-                type="contained"
-              >
-                Edit
-              </ButtonUI>
-              <td>
-                <ButtonUI
-                  onClick={(_) => this.deleteMemberList(id)}
-                  type="contained"
-                >
-                  Delete
-                </ButtonUI>
-              </td>
-            </td>
-          </tr>
-        </>
-      );
+  editBtnHandler = (idx) => {
+    this.setState({
+      editForm: {
+        ...this.state.userList[idx],
+      },
+      modalOpen: true,
     });
   };
-
+  editUserHandler = () => {
+    Axios.put(`${API_URL}/users/${this.state.editForm.id}`, this.state.editForm)
+      .then((res) => {
+        swal("Success!", "User data has been edited", "success");
+        this.setState({ modalOpen: false });
+        this.getUserList();
+      })
+      .catch((err) => {
+        swal("Error!", "User data could not be edited", "error");
+        console.log(err);
+      });
+  };
+  deleteHandler = (id) => {
+    Axios.delete(`${API_URL}/users/${id}`)
+      .then((res) => {
+        swal("Success!", "User data has been deleted", "success");
+        this.getUserList();
+      })
+      .catch((err) => {
+        swal("Error!", "User data could not be deleted", "error");
+        console.log(err);
+      });
+  };
+  toggleModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
+  };
+  componentDidMount() {
+    this.getUserList();
+  }
   render() {
     return (
       <div className="container py-4">
         <div className="dashboard">
           <caption className="p-3">
-            <h2>MEMBER LIST</h2>
+            <h2>Members</h2>
           </caption>
-          <table className="dashboard-table">
+          <table className="admin-table text-center">
             <thead>
               <tr>
-                <th>No</th>
-                <th>ID</th>
+                <th>No.</th>
+                <th>Role</th>
                 <th>Username</th>
                 <th>Full Name</th>
                 <th>Email</th>
-                <th>Actions</th>
+                <th colSpan={2}>Action</th>
               </tr>
             </thead>
-            <tbody>{this.renderMemberList()}</tbody>
+            <tbody>{this.renderUserList()}</tbody>
           </table>
         </div>
-        <div>
-          <Modal
-            toggle={this.toggleModal}
-            isOpen={this.state.modalOpen}
-            className="edit-modal"
-          >
-            <ModalHeader toggle={this.toggleModal}>
-              <caption>
-                <h3>Edit Member</h3>
-              </caption>
-            </ModalHeader>
-            <ModalBody>
-              <div className="row">
-                <div className="col-8">
-                  <TextField
-                    value={this.state.editForm.username}
-                    placeholder="Username"
-                    onChange={(e) =>
-                      this.inputHandler(e, "username", "editForm")
-                    }
-                  />
-                </div>
-                <div className="col-4">
-                  <TextField
-                    value={this.state.editForm.fullName}
-                    placeholder="FullName"
-                    onChange={(e) =>
-                      this.inputHandler(e, "fullName", "editForm")
-                    }
-                  />
-                </div>
-                <div className="col-6 mt-3">
-                  <TextField
-                    value={this.state.editForm.email}
-                    placeholder="Email"
-                    onChange={(e) => this.inputHandler(e, "email", "editForm")}
-                  />
-                </div>
-                <div className="col-6 mt-3">
-                  <select
-                    value={this.state.editForm.role}
-                    className="custom-text-input h-100 pl-3"
-                    onChange={(e) => this.inputHandler(e, "role", "editForm")}
-                  >
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <div className="col-12 text-center my-3">
-                  <img src={this.state.editForm.image} alt="" />
-                </div>
-                <div className="col-5 mt-3 offset-1">
-                  <ButtonUI
-                    className="w-100"
-                    onClick={this.toggleModal}
-                    type="outlined"
-                  >
-                    Cancel
-                  </ButtonUI>
-                </div>
-                <div className="col-5 mt-3">
-                  <ButtonUI
-                    className="w-100"
-                    onClick={this.editMemberHandler}
-                    type="contained"
-                  >
-                    Save
-                  </ButtonUI>
-                </div>
+        <Modal
+          toggle={this.toggleModal}
+          isOpen={this.state.modalOpen}
+          className="edit-modal"
+        >
+          <ModalHeader toggle={this.toggleModal}>
+            <caption>
+              <h3>Edit User</h3>
+            </caption>
+          </ModalHeader>
+          <ModalBody>
+            <div className="row">
+              <div className="col-12">
+                <TextField
+                  value={this.state.editForm.username}
+                  placeholder="Username"
+                  onChange={(e) => this.inputHandler(e, "username", "editForm")}
+                />
               </div>
-            </ModalBody>
-          </Modal>
-        </div>
+              <div className="col-12 mt-3">
+                <TextField
+                  value={this.state.editForm.fullName}
+                  placeholder="Full Name"
+                  onChange={(e) => this.inputHandler(e, "fullName", "editForm")}
+                />
+              </div>
+              <div className="col-12 mt-3">
+                <TextField
+                  value={this.state.editForm.email}
+                  placeholder="Email"
+                  onChange={(e) => this.inputHandler(e, "email", "editForm")}
+                />
+              </div>
+
+              <div className="col-12 mt-3">
+                <select
+                  value={this.state.editForm.role}
+                  className="custom-text-input h-100 pl-3"
+                  onChange={(e) => this.inputHandler(e, "role", "editForm")}
+                >
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
+              <div className="col-5 mt-5 offset-1">
+                <ButtonUI
+                  className="w-100"
+                  onClick={this.toggleModal}
+                  type="outlined"
+                >
+                  Cancel
+                </ButtonUI>
+              </div>
+              <div className="col-5 mt-5">
+                <ButtonUI
+                  className="w-100"
+                  onClick={this.editUserHandler}
+                  type="contained"
+                >
+                  Save
+                </ButtonUI>
+              </div>
+            </div>
+          </ModalBody>
+        </Modal>
       </div>
     );
   }

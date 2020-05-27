@@ -14,7 +14,11 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
 import ButtonUI from "../Button/Button";
-import { logoutHandler, navbarInputHandler } from "../../../redux/actions";
+import {
+  logoutHandler,
+  navbarInputHandler,
+  searchProductHandler,
+} from "../../../redux/actions";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -23,7 +27,7 @@ const CircleBg = ({ children }) => {
 class Navbar extends React.Component {
   state = {
     searchBarIsFocused: false,
-    searcBarInput: "",
+    searchProductHandler: "",
     dropdownOpen: false,
   };
 
@@ -66,7 +70,7 @@ class Navbar extends React.Component {
             type="text"
             placeholder="Cari produk impianmu disini"
             onChange={(e) => {
-              this.props.searchProduct(e.target.value);
+              this.props.searchProductHandler(e.target.value);
             }}
           />
         </div>
@@ -99,6 +103,14 @@ class Navbar extends React.Component {
                           to="/admin/payments"
                         >
                           Payments
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/admin/report"
+                        >
+                          Report
                         </Link>
                       </DropdownItem>
                     </>
@@ -177,6 +189,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   onLogout: logoutHandler,
   onChangeSearch: navbarInputHandler,
+  searchProductHandler,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

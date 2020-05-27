@@ -3,7 +3,10 @@
     {
       "username": "andi",
       "password": "password",
-      "id": 1
+      "id": 1,
+      "fullName": "Andii",
+      "email": "andi@mail.com",
+      "role": "user"
     },
     {
       "username": "doraemon",
@@ -15,7 +18,7 @@
     },
     {
       "username": "pikachu",
-      "fullName": "Dora Emon",
+      "fullName": "PIKACHU",
       "password": "password",
       "email": "doraemon@mail.com",
       "role": "user",
@@ -65,14 +68,6 @@
       "productName": "iMac (2019)"
     },
     {
-      "productName": "iPhone 11 Pro Max",
-      "price": "24000000",
-      "category": "",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
-      "desc": "HP Kamera boba",
-      "id": 5
-    },
-    {
       "productName": "iPhone 11 Max abis",
       "price": "123123123",
       "category": "Phone",
@@ -105,20 +100,7 @@
       "id": 9
     }
   ],
-  "carts": [
-    {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 1
-    },
-    {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 2
-    }
-  ],
+  "carts": [],
   "transactions": [
     {
       "userId": 4,
@@ -167,6 +149,14 @@
       "checkoutDate": 1588734379877,
       "completedDate": 1588598503706,
       "id": 6
+    },
+    {
+      "userId": 2,
+      "totalPrice": 20100000,
+      "status": "completed",
+      "checkoutDate": 1589965511275,
+      "completedDate": 1589965530924,
+      "id": 7
     }
   ],
   "transactionDetails": [
@@ -233,6 +223,22 @@
       "quantity": 1,
       "totalPrice": 15000000,
       "id": 8
+    },
+    {
+      "transactionId": 7,
+      "productId": 2,
+      "price": 15000000,
+      "quantity": 1,
+      "totalPrice": 15000000,
+      "id": 9
+    },
+    {
+      "transactionId": 7,
+      "productId": 1,
+      "price": 5000000,
+      "quantity": 1,
+      "totalPrice": 5000000,
+      "id": 10
     }
   ],
   "wishlist": []

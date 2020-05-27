@@ -172,3 +172,10 @@ export const fillCart = (userId) => {
       });
   };
 };
+
+export const searchProductHandler = (searchInput) => {
+  return {
+    type: "SEARCH_PRODUCT",
+    payload: searchInput,
+  };
+};

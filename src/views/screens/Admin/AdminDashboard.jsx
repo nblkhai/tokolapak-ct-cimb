@@ -41,6 +41,16 @@ class AdminDashboard extends React.Component {
         console.log(err);
       });
   };
+  deleteHandler = (id) => {
+    Axios.delete(`${API_URL}/products/${id}`)
+      .then((res) => {
+        console.log(res);
+        this.getProductList();
+      })
+      .catch((err) => {
+        console.log("gagal");
+      });
+  };
 
   renderProductList = () => {
     return this.state.productList.map((val, idx) => {
@@ -110,7 +120,11 @@ class AdminDashboard extends React.Component {
                   >
                     Edit
                   </ButtonUI>
-                  <ButtonUI className="mt-3" type="textual">
+                  <ButtonUI
+                    onClick={() => this.deleteHandler(idx)}
+                    className="mt-3"
+                    type="textual"
+                  >
                     Delete
                   </ButtonUI>
                 </div>
